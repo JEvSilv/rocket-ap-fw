@@ -8,25 +8,23 @@ void tiny_delay(uint32_t delay_in_nops)
 
 void warmup_ap()
 {
+  // Init Mode reg - setting left internal col
   *AP_MODE = 0x0;
+
+  // Block AP Wraper if and set and release reset
   *AP_CONTROL = 0x10001;
   *AP_CONTROL = 0x10000;
+
+  // Init Mode reg - Set right internal col
   *AP_MODE = 0x1000000;
+
+  // Block AP Wraper if and set and release reset
   *AP_CONTROL = 0x10001;
   *AP_CONTROL = 0x10000;
+
+  // Relase AP Wrapper interface and put a default value for control
   *AP_MODE = 0x0;
   *AP_CONTROL = 0x00000;
-}
-
-void ap_trigger_op()
-{
-  *AP_CONTROL |= ((uint8_t)ASSOCIATIVE_PROCESSOR) << 8;
-}
-
-void ap_set_cols(APCollunm sel_col, APInternalCollunm internal_col)
-{
-  *AP_MODE |= ((uint8_t)sel_col) << 16;
-  *AP_MODE |= ((uint8_t)internal_col) << 24;
 }
 
 void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t V[],
@@ -65,31 +63,27 @@ void ap_read_result_vector(APInternalCollunm internal_col, uint8_t V[],
   ap_read_vector(CAM_C, internal_col, V, size);
 }
 
-void set_op_direction(APOpDirection op_direction)
-{
-  *AP_MODE |= ((uint8_t)op_direction) << 8;
-}
-
-void trigger_ap_computing(APOperations op)
-{
-  // *AP_MODE = 0;
-  *AP_MODE = ((uint8_t) op);
-  *AP_CONTROL = 0x10100;// ap_trigger_op();
-}
-
-void ap_computing(APOperations op, APInternalCollunm internal_col, uint8_t A[],
+void ap_computing(APOperations op, APInternalCollunm internal_col, APOpDirection op_direction, uint8_t A[],
                   uint8_t B[], size_t size)
 {
+  // Load Vectors
   ap_write_vector(CAM_A, internal_col, A, size);
   ap_write_vector(CAM_B, internal_col, B, size);
+
+  // Block interface
   *AP_CONTROL = 0x10000;
-  *AP_MODE = (((uint8_t) internal_col) << 24) | ((uint8_t) op);
+
+  // Setting internal collumn
+  /* *AP_MODE = (((uint8_t) internal_col) << 24) | ((uint8_t) op); */
+  set_mode_reg(internal_col, op_direction, op);
+
+  // Trigger ap computation
   *AP_CONTROL = 0x10000 | (1 << 8);
 }
 
-/* extern inline void ap_set_if_state(APIfState ap_if_state) { */
-/*   *AP_CONTROL |= ((uint8_t) ap_if_state) << 16; */
-/* } */
+void release_ap_if() {
+  set_control_reg(FALSE, FALSE, FALSE);
+}
 
 volatile uint8_t ap_irq_check()
 {

@@ -24,13 +24,14 @@ void ap_computing_test()
 
   uint8_t B[] = {11, 21, 31, 41, 51, 61, 71, 81, 91, 111};
 
-  ap_computing(XOR, LEFT, A, B, 10);
+  ap_computing(XOR, LEFT, HORIZONTAL, A, B, 10);
 
   while (ap_irq_check() != 0) {
     *flag = 0; 
   }
   // ap_set_if_state(DYNAMIC);
   *flag = 1;
+  release_ap_if();
 }
 
 void test() {
