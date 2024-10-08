@@ -1,0 +1,94 @@
+src/i2c.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/i2c.c \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/i2c.h \
+ metal/machine.h metal/machine/platform.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/fixed-clock.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/clock.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/compiler.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/memory.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_clint0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_cpu.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/cpu.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/interrupt.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_plic0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/pmp.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_gpio0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/gpio.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_pwm0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/pwm.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_spi0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/io.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/spi.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_uart0.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/uart.h
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/i2c.h:
+
+metal/machine.h:
+
+metal/machine/platform.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/fixed-clock.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/clock.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/compiler.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/memory.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_clint0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_cpu.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/cpu.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/interrupt.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_plic0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/pmp.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_gpio0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/gpio.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_pwm0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/pwm.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_spi0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/io.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/spi.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/sifive_uart0.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/uart.h:

@@ -1,0 +1,41 @@
+src/hpm.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/hpm.c \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_cpu.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/compiler.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/cpu.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/interrupt.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/hpm.h
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/drivers/riscv_cpu.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/compiler.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/cpu.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/interrupt.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h:
+
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h:
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/hpm.h:

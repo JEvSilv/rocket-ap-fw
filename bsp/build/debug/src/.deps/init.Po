@@ -1,0 +1,5 @@
+src/init.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/init.c \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/init.h
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/init.h:

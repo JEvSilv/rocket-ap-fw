@@ -1,0 +1,2 @@
+gloss/crt0.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/gloss/crt0.S

@@ -1,0 +1,5 @@
+src/drivers/sifive_test0.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/drivers/sifive_test0.c \
+ metal/machine/platform.h
+
+metal/machine/platform.h:

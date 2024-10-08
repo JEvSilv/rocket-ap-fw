@@ -1,0 +1,2 @@
+src/vector.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/vector.S

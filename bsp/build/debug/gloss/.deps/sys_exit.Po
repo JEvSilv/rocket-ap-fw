@@ -1,0 +1,5 @@
+gloss/sys_exit.o: \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/gloss/sys_exit.c \
+ /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/shutdown.h
+
+/home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/metal/shutdown.h:
