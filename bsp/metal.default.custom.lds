@@ -14,8 +14,8 @@ MEMORY
 {
 	ap (airwx) : ORIGIN = 0x80004000, LENGTH = 0x4000
 	dtim (airwx) : ORIGIN = 0x80000000, LENGTH = 0x4000
-    itim (airwx) : ORIGIN = 0x8000000, LENGTH = 0x4000
-    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x4000
+    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x4000
+    ram (arw!xi) : ORIGIN = 0x8000000, LENGTH = 0x4000
     rom (irx!wa) : ORIGIN = 0x20400000, LENGTH = 0x1fc00000
 }
 
@@ -275,7 +275,7 @@ SECTIONS
         PROVIDE( metal_segment_heap_target_end = . );
         PROVIDE( _heap_end = . );
         PROVIDE( __heap_end = . );
-    } >itim 
+    } >ram :ram
 
     /* C++ exception handling information is
      * not useful with our current runtime environment,

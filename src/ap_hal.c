@@ -42,7 +42,7 @@ void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
 
   for (int i = 0; i < size; i++) {
     cam[i] = V[i];
-    tiny_delay(10);
+    tiny_delay(1);
   }
 }
 
