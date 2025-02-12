@@ -6,6 +6,8 @@ void tiny_delay(uint32_t delay_in_nops)
   for (int i = 0; i < delay_in_nops; i++) asm volatile("nop");
 }
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
 void warmup_ap()
 {
   // Init Mode reg - setting left internal col
@@ -26,6 +28,7 @@ void warmup_ap()
   *AP_MODE = 0x0;
   *AP_CONTROL = 0x00000;
 }
+#pragma GCC pop_options
 
 void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
                      size_t size)
@@ -42,7 +45,6 @@ void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
 
   for (int i = 0; i < size; i++) {
     cam[i] = V[i];
-    tiny_delay(1);
   }
 }
 
@@ -82,7 +84,23 @@ void ap_computing(APOperations op, APInternalCollunm internal_col, APOpDirection
   *AP_CONTROL = 0x10000;
 
   // Setting internal collumn
-  set_mode_reg(internal_col, op_direction, op);
+  set_mode_reg(internal_col, 0, op_direction, op);
+
+  // Trigger ap computation - bug here
+  *AP_CONTROL = 0x10000 | (1 << 8);
+}
+
+void ap_vertical_computing(APOperations op, APCollunm col, APInternalCollunm internal_col,
+               uint8_t *V, size_t size)
+{
+  // Load Vectors
+  ap_write_vector(col, internal_col, V, size);
+
+  // Block interface
+  *AP_CONTROL = 0x10000;
+
+  // Setting internal collumn
+  set_mode_reg(internal_col, col, 1, op);
 
   // Trigger ap computation - bug here
   *AP_CONTROL = 0x10000 | (1 << 8);

@@ -12,23 +12,20 @@ ENTRY(_enter)
 
 MEMORY
 {
-	ap (airwx) : ORIGIN = 0x80004000, LENGTH = 0x4000
-	dtim (airwx) : ORIGIN = 0x80000000, LENGTH = 0x4000
     itim (airwx) : ORIGIN = 0x8000000, LENGTH = 0x4000
-    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x4000
-    rom (irx!wa) : ORIGIN = 0x20400000, LENGTH = 0x1fc00000
+    ram (arw!xi) : ORIGIN = 0x8000000, LENGTH = 0x4000
+    rom (irx!wa) : ORIGIN = 0x20000000, LENGTH = 0x2000
 }
 
 PHDRS
 {
     rom PT_LOAD;
     ram_init PT_LOAD;
-    dtim_init PT_LOAD;
-    dtim PT_LOAD;
     tls PT_TLS;
     ram PT_LOAD;
     itim_init PT_LOAD;
     text PT_LOAD;
+    lim_init PT_LOAD;
 }
 
 SECTIONS
@@ -76,15 +73,7 @@ SECTIONS
      * certain core features */
     PROVIDE(__metal_chicken_bit = 1);
 
-    /* The memory_ecc_scrub bit is used by _entry code to enable/disable
-     * memories scrubbing to zero  */
     PROVIDE(__metal_eccscrub_bit = 0);
-
-    /* The RAM memories map for ECC scrubbing */
-    PROVIDE( metal_dtim_0_memory_start = 0x80000000 );
-    PROVIDE( metal_dtim_0_memory_end = 0x80000000 + 0x4000 );
-    PROVIDE( metal_itim_0_memory_start = 0x8000000 );
-    PROVIDE( metal_itim_0_memory_end = 0x8000000 + 0x4000 );
 
     /* ROM SECTION
      *
@@ -96,21 +85,22 @@ SECTIONS
     .init : {
         /* The _enter symbol is placed in the .text.metal.init.enter section
          * and must be placed at the beginning of the program */
+        KEEP (*(.text.metal.init.enter.xprop))
         KEEP (*(.text.metal.init.enter))
         KEEP (*(.text.metal.init.*))
         KEEP (*(SORT_NONE(.init)))
         KEEP (*(.text.libgloss.start))
-    } >ram :ram
+    } >ram :rom
 
     .fini : {
         KEEP (*(SORT_NONE(.fini)))
-    } >ram :ram
+    } >ram :rom
 
     .preinit_array : ALIGN(8) {
         PROVIDE_HIDDEN (__preinit_array_start = .);
         KEEP (*(.preinit_array))
         PROVIDE_HIDDEN (__preinit_array_end = .);
-    } >ram :ram
+    } >ram :rom
 
     .init_array : ALIGN(8) {
         PROVIDE_HIDDEN (__init_array_start = .);
@@ -121,7 +111,7 @@ SECTIONS
         KEEP (*(SORT_BY_INIT_PRIORITY(.metal.init_array.*)));
         KEEP (*(.metal.init_array));
         PROVIDE_HIDDEN ( metal_constructors_end = .);
-    } >ram :ram
+    } >ram :rom
 
     .fini_array : ALIGN(8) {
         PROVIDE_HIDDEN (__fini_array_start = .);
@@ -132,7 +122,7 @@ SECTIONS
         KEEP (*(SORT_BY_INIT_PRIORITY(.metal.fini_array.*)));
         KEEP (*(.metal.fini_array));
         PROVIDE_HIDDEN ( metal_destructors_end = .);
-    } >ram :ram
+    } >ram :rom
 
  
 
@@ -143,7 +133,7 @@ SECTIONS
         KEEP (*(SORT(.ctors.*)))
         KEEP (*(.ctors))
         KEEP (*(.metal.ctors .metal.ctors.*))
-    } >ram :ram
+    } >ram :rom
 
     .dtors : {
         KEEP (*crtbegin.o(.dtors))
@@ -152,7 +142,7 @@ SECTIONS
         KEEP (*(SORT(.dtors.*)))
         KEEP (*(.dtors))
         KEEP (*(.metal.dtors .metal.dtors.*))
-    } >ram : ram
+    } >ram : rom
 
     .rodata : {
         *(.rdata)
@@ -164,8 +154,7 @@ SECTIONS
         *(.srodata.cst4)
         *(.srodata.cst2)
         *(.srodata .srodata.*)
-
-    } >ram :ram
+    } >ram :rom
 
     /* ITIM SECTION
      *
@@ -185,10 +174,28 @@ SECTIONS
     PROVIDE( metal_segment_itim_target_start = ADDR(.itim) );
     PROVIDE( metal_segment_itim_target_end = ADDR(.itim) + SIZEOF(.itim) );
 
+    /* LIM SECTION
+     *
+     * The following sections contain data which is copied from read-only
+     * memory into a loosely integrated memory (LIM), which is shared with L2
+     * cache, during pre-main program initialization.
+     *
+     * Generally, the data copied into the LIM should be performance-critical
+     * functions which benefit from low instruction-fetch latency.
+     */
+
+    .lim : ALIGN(8) {
+        *(.lim .lim.*)
+    } >ram AT>ram :lim_init
+
+    PROVIDE( metal_segment_lim_source_start = LOADADDR(.lim) );
+    PROVIDE( metal_segment_lim_target_start = ADDR(.lim) );
+    PROVIDE( metal_segment_lim_target_end = ADDR(.lim) + SIZEOF(.lim) );
+
     /* TEXT SECTION
      *
      * The following section contains the code of the program, excluding
-     * everything that's been allocated into the ITIM already
+     * everything that's been allocated into the ITIM/LIM already
      */
 
     .text : {
@@ -218,12 +225,12 @@ SECTIONS
         PROVIDE( __global_pointer$ = . + 0x800 );
         *(.sdata .sdata.* .sdata2.*)
         *(.gnu.linkonce.s.*)
-    } >ram AT>ram :ram
+    } >ram AT>ram :ram_init
 
     .tdata : ALIGN(8) {
         PROVIDE( __tls_base = . );
 	*(.tdata .tdata.* .gnu.linkonce.td.*)
-    } >ram AT>ram :ram
+    } >ram AT>ram :tls :ram_init
 
     PROVIDE( __tdata_source = LOADADDR(.tdata) );
     PROVIDE( __tdata_size = SIZEOF(.tdata) );
@@ -263,9 +270,9 @@ SECTIONS
         . += __stack_size; /* Hart 0 */
         PROVIDE( _sp = . );
         PROVIDE(metal_segment_stack_end = .);
-    } >dtim :dtim_init
+    } >ram :ram
 
-    .heap (NOLOAD) : ALIGN(4) {
+    .heap (NOLOAD) : ALIGN(8) {
         PROVIDE( __end = . );
         PROVIDE( __heap_start = . );
         PROVIDE( metal_segment_heap_target_start = . );
@@ -275,7 +282,7 @@ SECTIONS
         PROVIDE( metal_segment_heap_target_end = . );
         PROVIDE( _heap_end = . );
         PROVIDE( __heap_end = . );
-    } >itim 
+    } >ram :ram
 
     /* C++ exception handling information is
      * not useful with our current runtime environment,

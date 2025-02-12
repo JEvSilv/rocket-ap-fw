@@ -75,9 +75,9 @@ typedef enum { DYNAMIC = 0, STATIC = 1 } APIfState;
 typedef enum { TRUE = 1, FALSE = 0 } BitState;
 
 /* Macro functions */
-#define set_mode_reg(sel_internal_col, op_direction, cmd)              \
+#define set_mode_reg(sel_internal_col, col, op_direction, cmd)              \
   {                                                                    \
-    *AP_MODE = (sel_internal_col << 24) | (op_direction << 8) | (cmd); \
+    *AP_MODE = (sel_internal_col << 24) | (col << 16) | (op_direction << 8) | (cmd); \
   }
 
 #define set_control_reg(ap_if_state, ap_trigger_ap, ap_rst)              \
@@ -91,7 +91,10 @@ void tiny_delay(uint32_t delay_in_nops);
 
 // Reset both internal collumns
 // Base startup
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
 void warmup_ap();
+#pragma GCC pop_options
 
 void flush_col_ap();
 
@@ -109,6 +112,9 @@ void ap_read_result_vector(APInternalCollunm internal_col, uint8_t *V,
 void ap_computing(APOperations op, APInternalCollunm internal_col,
                   APOpDirection op_direction, uint8_t *A, uint8_t *B,
                   size_t size);
+
+void ap_vertical_computing(APOperations op, APCollunm col, APInternalCollunm internal_col,
+               uint8_t *V, size_t size);
 
 void release_ap_if();
 

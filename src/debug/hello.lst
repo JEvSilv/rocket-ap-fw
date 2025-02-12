@@ -1,0 +1,1732 @@
+
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/debug/hello.elf:     file format elf32-littleriscv
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/debug/hello.elf
+architecture: riscv:rv32, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x80000000
+
+Program Header:
+    LOAD off    0x00001000 vaddr 0x80000000 paddr 0x80000000 align 2**12
+         filesz 0x000002e0 memsz 0x000002e0 flags r-x
+    LOAD off    0x000017a0 vaddr 0x800007a0 paddr 0x800007a0 align 2**12
+         filesz 0x0000006c memsz 0x0000006c flags rw-
+     TLS off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**2
+         filesz 0x00000000 memsz 0x00000000 flags ---
+    LOAD off    0x00001810 vaddr 0x80000810 paddr 0x80000810 align 2**12
+         filesz 0x00000000 memsz 0x00000ca0 flags rw-
+    LOAD off    0x0000180c vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x00000000 memsz 0x00000000 flags ---
+    LOAD off    0x000022e0 vaddr 0x800002e0 paddr 0x800002e0 align 2**12
+         filesz 0x000004ba memsz 0x000004ba flags r-x
+    LOAD off    0x0000279a vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x00000000 memsz 0x00000000 flags ---
+
+Sections:
+Idx Name              Size      VMA       LMA       File off  Algn  Flags
+  0 .init             000002ce  80000000  80000000  00001000  2**4  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata           00000012  800002ce  800002ce  000012ce  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .text             000004ba  800002e0  800002e0  000022e0  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data             0000006c  800007a0  800007a0  000017a0  2**3  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss              00000098  80000810  80000810  00001810  2**3  ALLOC
+  5 .stack            00000400  800008b0  800008b0  00001810  2**4  ALLOC
+  6 .heap             00000800  80000cb0  80000cb0  00001810  2**3  ALLOC
+  7 .debug_info       00005346  00000000  00000000  0000279a  2**0  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev     00000c66  00000000  00000000  00007ae0  2**0  CONTENTS, READONLY, DEBUGGING
+  9 .debug_aranges    00000248  00000000  00000000  00008748  2**3  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges     00000170  00000000  00000000  00008990  2**3  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_line       00002d92  00000000  00000000  00008b00  2**0  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_str        00001950  00000000  00000000  0000b892  2**0  CONTENTS, READONLY, DEBUGGING
+ 13 .comment          00000028  00000000  00000000  0000d1e2  2**0  CONTENTS, READONLY
+ 14 .riscv.attributes 0000002b  00000000  00000000  0000d20a  2**0  CONTENTS, READONLY
+ 15 .debug_frame      000004ec  00000000  00000000  0000d238  2**2  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+80000000 l    d  .init	00000000 .init
+800002ce l    d  .rodata	00000000 .rodata
+800002e0 l    d  .text	00000000 .text
+800007a0 l    d  .data	00000000 .data
+80000810 l    d  .bss	00000000 .bss
+800008b0 l    d  .stack	00000000 .stack
+80000cb0 l    d  .heap	00000000 .heap
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    df *ABS*	00000000 scrub.o
+800000ca l     F .init	00000000 __metal_memory_scrub
+80000138 l       .init	00000000 skip_scrub
+00000000 l    df *ABS*	00000000 synchronize_harts.c
+00000000 l    df *ABS*	00000000 crt0.o
+80000234 l       .init	00000000 _skip_init
+800002ce l       .rodata	00000000 argv
+800002d2 l       .rodata	00000000 envp
+800002d6 l       .rodata	00000000 name
+00000000 l    df *ABS*	00000000 hello.c
+00000000 l    df *ABS*	00000000 ap_hal.c
+00000000 l    df *ABS*	00000000 sifive_test0.c
+800003b4 l     F .text	00000028 __metal_driver_sifive_test0_base
+00000000 l    df *ABS*	00000000 shutdown.c
+00000000 l    df *ABS*	00000000 atexit.c
+00000000 l    df *ABS*	00000000 exit.c
+00000000 l    df *ABS*	00000000 fini.c
+00000000 l    df *ABS*	00000000 init.c
+00000000 l    df *ABS*	00000000 __atexit.c
+8000081c l     O .bss	0000008c _global_atexit0
+00000000 l    df *ABS*	00000000 __call_atexit.c
+00000000 l    df *ABS*	00000000 init.c
+80000814 l     O .bss	00000004 init_done.1531
+80000818 l     O .bss	00000004 fini_done.1540
+00000000 l    df *ABS*	00000000 sys_exit.c
+00000000 l    df *ABS*	00000000 impure.c
+800007a0 l     O .data	00000060 impure_data
+00000000 l    df *ABS*	00000000 inline.c
+00000000 l    df *ABS*	00000000 
+800002d0 l       .rodata	00000000 metal_constructors_end
+800002d0 l       .rodata	00000000 __fini_array_end
+800002d0 l       .rodata	00000000 metal_destructors_end
+800002d0 l       .rodata	00000000 metal_destructors_start
+800002d0 l       .rodata	00000000 __fini_array_start
+800002d0 l       .rodata	00000000 __init_array_end
+800002d0 l       .rodata	00000000 __preinit_array_end
+800002d0 l       .rodata	00000000 __init_array_start
+800002d0 l       .rodata	00000000 metal_constructors_start
+800002d0 l       .rodata	00000000 __preinit_array_start
+80001000 g       .data	00000000 __global_pointer$
+80000810 g       .data	00000000 __tls_base
+800008a8 g       .bss	00000000 metal_segment_bss_target_end
+00000001 g       *ABS*	00000000 __metal_chicken_bit
+800003dc g     F .text	0000004a __metal_driver_sifive_test0_exit
+08000000 g       .rodata	00000000 metal_segment_itim_target_start
+8000014a g     F .init	0000000e __metal_synchronize_harts
+80000810 g       .data	00000000 metal_segment_bss_target_start
+80000804 g     O .data	00000004 __metal_dt_teststatus_4000
+00000400 g       *ABS*	00000000 __stack_size
+800000d6  w    F .init	00000000 __metal_before_start
+80000760  w    F .text	00000014 metal_init_run
+00000000 g       *ABS*	00000000 __metal_eccscrub_bit
+80000cb0 g       .heap	00000000 metal_segment_heap_target_start
+80000340 g     F .text	00000074 warmup_ap
+80000680 g     F .text	00000070 metal_init
+800002e0 g       .rodata	00000000 metal_segment_lim_target_end
+80000800 g     O .data	00000004 _global_impure_ptr
+800004ce g     F .text	0000006a __libc_init_array
+800002ae g     F .init	00000002 _init
+80000496 g     F .text	00000038 __libc_fini_array
+800006f0 g     F .text	00000070 metal_fini
+800007a0 g       .data	00000000 metal_segment_data_target_start
+00000000 g       *ABS*	00000000 __tbss_size
+00000800 g       *ABS*	00000000 __heap_size
+80000810 g     O .bss	00000004 _global_atexit
+800005bc g     F .text	000000c4 __call_exitprocs
+80000cb0 g       .stack	00000000 _sp
+800002e0 g     F .text	00000044 test
+80000158 g     F .init	00000000 _start
+80000538 g     F .text	00000084 __register_exitproc
+800002b0  w    F .init	00000000 secondary_main
+80000324 g     F .text	0000001c main
+80000810 g       .data	00000000 metal_segment_data_target_end
+80000448 g     F .text	0000001a metal_shutdown
+08000000 g       .rodata	00000000 metal_segment_itim_target_end
+80000092 g     F .init	00000000 metal_mem_scrub
+80000000 g       .init	00000000 _enter
+800002e0 g       *ABS*	00000000 metal_segment_itim_source_start
+800002ae g     F .init	00000002 _fini
+800002e0 g       .rodata	00000000 metal_segment_lim_target_start
+80000462 g     F .text	0000000a atexit
+80000426 g     F .text	00000022 __metal_shutdown_exit
+80000808 g     O .data	00000004 __metal_driver_vtable_sifive_test0
+800007a0 g       *ABS*	00000000 metal_segment_data_source_start
+8000013c g       .init	00000000 early_trap_vector
+800014b0 g       .heap	00000000 metal_segment_heap_target_end
+8000046c g     F .text	0000002a exit
+800002e0 g       *ABS*	00000000 metal_segment_lim_source_start
+80000774  w    F .text	00000014 metal_fini_run
+80000788 g     F .text	00000012 _exit
+80000090  w      .init	00000000 __register_frame_info
+00000000 g       *ABS*	00000000 __metal_boot_hart
+
+
+
+Disassembly of section .init:
+
+80000000 <_enter>:
+_enter():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:24
+     * it's not valid to obtain the address of any symbol without GP
+     * configured.  The C environment might go ahead and do this again, but
+     * that's safe as it's a fixed register. */
+.option push
+.option norelax
+    la gp, __global_pointer$
+80000000:	00001197          	auipc	gp,0x1
+80000004:	00018193          	mv	gp,gp
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:28
+.option pop
+
+    /* trap over the chicken bit register clearing, aloe & fe310 dont have it */
+    la t0, 1f
+80000008:	00000297          	auipc	t0,0x0
+8000000c:	01828293          	addi	t0,t0,24 # 80000020 <_enter+0x20>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:29
+    csrw mtvec, t0
+80000010:	30529073          	csrw	mtvec,t0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:31
+    /* chicken bit is enable if core are sifive series. */
+    la t0, __metal_chicken_bit
+80000014:	00100293          	li	t0,1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:32
+    beqz t0, 1f
+80000018:	00028463          	beqz	t0,80000020 <_enter+0x20>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:34
+    /* If set, always clear the feature disable register for all cores series */
+    csrwi 0x7C1, 0
+8000001c:	7c105073          	csrwi	0x7c1,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:39
+.align 4
+1:
+    /* Set up a simple trap vector to catch anything that goes wrong early in
+     * the boot process. */
+    la t0, early_trap_vector
+80000020:	00000297          	auipc	t0,0x0
+80000024:	11c28293          	addi	t0,t0,284 # 8000013c <early_trap_vector>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:40
+    csrw mtvec, t0
+80000028:	30529073          	csrw	mtvec,t0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:48
+     * C, so here we set up a C environment. First we set up a stack pointer,
+     * which is left as a weak reference in order to allow initialization
+     * routines that do not need a stack to be set up to transparently be
+     * called. */
+    .weak __metal_stack_pointer
+    la sp, __metal_stack_pointer
+8000002c:	80000117          	auipc	sp,0x80000
+80000030:	fd410113          	addi	sp,sp,-44 # 0 <__metal_boot_hart>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:55
+   /* The METAL is designed for a bare-metal environment and therefore is expected
+    * to define its own stack pointer. We also align the stack pointer here
+    * because the only RISC-V ABI that's currently defined, mandates 16-byte
+    * stack alignment. */
+
+    bne sp, zero, 1f
+80000034:	00011463          	bnez	sp,8000003c <_enter+0x3c>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:56
+    la sp, _sp
+80000038:	cb018113          	addi	sp,gp,-848 # 80000cb0 <_sp>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:59
+1:
+    /* Increment by hartid number of stack sizes */
+    csrr a0, mhartid
+8000003c:	f1402573          	csrr	a0,mhartid
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:60
+    li t0, 0
+80000040:	4281                	li	t0,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:61
+    la t1, __stack_size
+80000042:	40000313          	li	t1,1024
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:63
+1:
+    andi sp, sp, -16
+80000046:	ff017113          	andi	sp,sp,-16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:64
+    beq t0, a0, 1f
+8000004a:	00a28563          	beq	t0,a0,80000054 <_enter+0x54>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:65
+    add sp, sp, t1
+8000004e:	911a                	add	sp,sp,t1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:66
+    addi t0, t0, 1
+80000050:	0285                	addi	t0,t0,1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:67
+    j 1b
+80000052:	bfd5                	j	80000046 <_enter+0x46>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:76
+     * just skip over the call entirely.   Note that __metal_initialize isn't
+     * actually a full C function, as it doesn't end up with the .bss or .data
+     * segments having been initialized.  This is done to avoid putting a
+     * burden on systems that can be initialized without having a C environment
+     * set up. */
+    la ra, __metal_before_start
+80000054:	00000097          	auipc	ra,0x0
+80000058:	08208093          	addi	ra,ra,130 # 800000d6 <__metal_before_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:77
+    beqz ra, 1f
+8000005c:	00008363          	beqz	ra,80000062 <_enter+0x62>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:78
+    jalr ra
+80000060:	9082                	jalr	ra
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:84
+1:
+
+    /* At this point we can enter the C runtime's startup file.  The arguments
+     * to this function are designed to match those provided to the SEE, just
+     * so we don't have to write another ABI. */
+    csrr a0, mhartid
+80000062:	f1402573          	csrr	a0,mhartid
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:85
+    li a1, 0
+80000066:	4581                	li	a1,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:86
+    li a2, 0
+80000068:	4601                	li	a2,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:87
+    call _start
+8000006a:	20fd                	jal	80000158 <_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:92
+
+    /* If we've made it back here then there's probably something wrong.  We
+     * allow the METAL to register a handler here. */
+    .weak __metal_after_main
+    la ra, __metal_after_main
+8000006c:	80000097          	auipc	ra,0x80000
+80000070:	f9408093          	addi	ra,ra,-108 # 0 <__metal_boot_hart>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:93
+    beqz ra, 1f
+80000074:	00008363          	beqz	ra,8000007a <_enter+0x7a>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:94
+    jalr ra
+80000078:	9082                	jalr	ra
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:99
+1:
+
+    /* If that handler returns then there's not a whole lot we can do.  Just
+     * try to make some noise. */
+     la t0, 1f
+8000007a:	00000297          	auipc	t0,0x0
+8000007e:	00c28293          	addi	t0,t0,12 # 80000086 <_enter+0x86>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:100
+     csrw mtvec, t0
+80000082:	30529073          	csrw	mtvec,t0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:102
+1:
+     lw t1, 0(x0)
+80000086:	00002303          	lw	t1,0(zero) # 0 <__metal_boot_hart>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:103
+     j 1b
+8000008a:	bff5                	j	80000086 <_enter+0x86>
+8000008c:	0000                	unimp
+	...
+
+80000090 <__register_frame_info>:
+__register_frame_info():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/entry.S:117
+.weak __register_frame_info
+.global __register_frame_info
+.section .text.metal.init.__register_frame_info
+__register_frame_info:
+    .cfi_startproc
+    ret
+80000090:	8082                	ret
+
+80000092 <metal_mem_scrub>:
+metal_mem_scrub():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:24
+.type metal_mem_scrub, @function
+metal_mem_scrub:
+
+    /* Disable machine interrupts,
+    restore previous mstatus value at exit */
+    li      a3, 8
+80000092:	46a1                	li	a3,8
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:25
+    csrrc   t1, mstatus, a3
+80000094:	3006b373          	csrrc	t1,mstatus,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:28
+
+#if __riscv_xlen == 32
+    addi    t0, x0, 4
+80000098:	00400293          	li	t0,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:30
+1:
+    blt     a1, t0, 2f
+8000009c:	0055c563          	blt	a1,t0,800000a6 <metal_mem_scrub+0x14>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:31
+    andi    a2, a0, 3
+800000a0:	00357613          	andi	a2,a0,3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:32
+    beqz    a2, 3f
+800000a4:	ca11                	beqz	a2,800000b8 <metal_mem_scrub+0x26>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:34
+2:
+    sb      x0, 0(a0)
+800000a6:	00050023          	sb	zero,0(a0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:35
+    addi    a0, a0, 1
+800000aa:	0505                	addi	a0,a0,1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:36
+    addi    a1, a1, -1
+800000ac:	15fd                	addi	a1,a1,-1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:37
+    bgtz    a1, 1b
+800000ae:	feb047e3          	bgtz	a1,8000009c <metal_mem_scrub+0xa>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:38
+    csrw    mstatus, t1
+800000b2:	30031073          	csrw	mstatus,t1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:39
+    ret
+800000b6:	8082                	ret
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:41
+3:
+    sw      x0, 0(a0)
+800000b8:	00052023          	sw	zero,0(a0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:42
+    addi    a0, a0, 4
+800000bc:	0511                	addi	a0,a0,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:43
+    addi    a1, a1, -4
+800000be:	15f1                	addi	a1,a1,-4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:44
+    bgtz    a1, 1b
+800000c0:	fcb04ee3          	bgtz	a1,8000009c <metal_mem_scrub+0xa>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:45
+    csrw    mstatus, t1
+800000c4:	30031073          	csrw	mstatus,t1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:46
+    ret
+800000c8:	8082                	ret
+
+800000ca <__metal_memory_scrub>:
+__metal_memory_scrub():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:74
+.type __metal_memory_scrub, @function
+__metal_memory_scrub:
+/* Zero out specified memory regions */
+1:
+#if __riscv_xlen == 32
+    sw      x0, 0(t1)
+800000ca:	00032023          	sw	zero,0(t1)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:75
+    addi    t1, t1, 4
+800000ce:	0311                	addi	t1,t1,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:76
+    blt     t1, t2, 1b
+800000d0:	fe734de3          	blt	t1,t2,800000ca <__metal_memory_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:82
+#else
+    sd      x0, 0(t1)
+    addi    t1, t1, 8
+    blt     t1, t2, 1b
+#endif
+    ret
+800000d4:	8082                	ret
+
+800000d6 <__metal_before_start>:
+__metal_before_start():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:94
+.weak __metal_before_start
+.global __metal_before_start
+.type __metal_before_start, @function
+__metal_before_start:
+    /* Save caller ra */
+    mv      s0, ra
+800000d6:	8406                	mv	s0,ra
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:96
+
+    la      t0, __metal_eccscrub_bit
+800000d8:	80000297          	auipc	t0,0x80000
+800000dc:	f2828293          	addi	t0,t0,-216 # 0 <__metal_boot_hart>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:97
+    beqz    t0, skip_scrub
+800000e0:	04028c63          	beqz	t0,80000138 <skip_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:99
+
+    la      t0, __metal_boot_hart
+800000e4:	80000297          	auipc	t0,0x80000
+800000e8:	f1c28293          	addi	t0,t0,-228 # 0 <__metal_boot_hart>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:100
+    csrr    a5, mhartid
+800000ec:	f14027f3          	csrr	a5,mhartid
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:103
+
+    /* Disable machine interrupts to be safe */
+    li      a3, 8
+800000f0:	46a1                	li	a3,8
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:104
+    csrc    mstatus, a3
+800000f2:	3006b073          	csrc	mstatus,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:107
+
+    /* Zero out per hart stack */
+    mv      t1, sp
+800000f6:	830a                	mv	t1,sp
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:108
+    la      t2, __stack_size
+800000f8:	80000397          	auipc	t2,0x80000
+800000fc:	30838393          	addi	t2,t2,776 # 400 <__stack_size>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:109
+    add     t2, t2, sp
+80000100:	938a                	add	t2,t2,sp
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:110
+    beq     t1, t2, 1f
+80000102:	00730363          	beq	t1,t2,80000108 <__metal_before_start+0x32>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:111
+    jal     __metal_memory_scrub
+80000106:	37d1                	jal	800000ca <__metal_memory_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:113
+1:
+    bne     a5, t0, skip_scrub
+80000108:	02579863          	bne	a5,t0,80000138 <skip_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:116
+
+    /* Zero out data segment */
+    la      t1, metal_segment_data_target_start
+8000010c:	00000317          	auipc	t1,0x0
+80000110:	69430313          	addi	t1,t1,1684 # 800007a0 <metal_segment_data_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:117
+    la      t2, metal_segment_data_target_end
+80000114:	00000397          	auipc	t2,0x0
+80000118:	6fc38393          	addi	t2,t2,1788 # 80000810 <__tls_base>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:118
+    beq     t1, t2, 1f
+8000011c:	00730363          	beq	t1,t2,80000122 <__metal_before_start+0x4c>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:119
+    jal     __metal_memory_scrub
+80000120:	376d                	jal	800000ca <__metal_memory_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:122
+1:
+    /* Zero out itim memory */
+    la      t1, metal_segment_itim_target_start
+80000122:	88000317          	auipc	t1,0x88000
+80000126:	ede30313          	addi	t1,t1,-290 # 8000000 <metal_segment_itim_target_end>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:123
+    la      t2, metal_segment_itim_target_end
+8000012a:	88000397          	auipc	t2,0x88000
+8000012e:	ed638393          	addi	t2,t2,-298 # 8000000 <metal_segment_itim_target_end>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:124
+    beq     t1, t2, skip_scrub
+80000132:	00730363          	beq	t1,t2,80000138 <skip_scrub>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:125
+    jal     __metal_memory_scrub
+80000136:	3f51                	jal	800000ca <__metal_memory_scrub>
+
+80000138 <skip_scrub>:
+skip_scrub():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:129
+
+skip_scrub:
+    /* Restore caller ra */
+    mv      ra, s0
+80000138:	80a2                	mv	ra,s0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/scrub.S:130
+    ret
+8000013a:	8082                	ret
+
+8000013c <early_trap_vector>:
+early_trap_vector():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/trap.S:64
+.section .text.metal.init.trapvec
+.global early_trap_vector
+.align 2
+early_trap_vector:
+    .cfi_startproc
+    csrr t0, mcause
+8000013c:	342022f3          	csrr	t0,mcause
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/trap.S:65
+    csrr t1, mepc
+80000140:	34102373          	csrr	t1,mepc
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/trap.S:66
+    csrr t2, mtval
+80000144:	343023f3          	csrr	t2,mtval
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/trap.S:67
+    j early_trap_vector
+80000148:	bfd5                	j	8000013c <early_trap_vector>
+
+8000014a <__metal_synchronize_harts>:
+__metal_synchronize_harts():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/synchronize_harts.c:19
+/*
+ * _synchronize_harts() is called by crt0.S to cause harts > 0 to wait for
+ * hart 0 to finish copying the datat section, zeroing the BSS, and running
+ * the libc contstructors.
+ */
+__attribute__((section(".init"))) void __metal_synchronize_harts() {
+8000014a:	1141                	addi	sp,sp,-16
+8000014c:	c622                	sw	s0,12(sp)
+8000014e:	0800                	addi	s0,sp,16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/synchronize_harts.c:66
+        while (METAL_MSIP(msip_base, hart) == 1)
+            ;
+    }
+
+#endif /* __METAL_DT_MAX_HARTS > 1 */
+}
+80000150:	0001                	nop
+80000152:	4432                	lw	s0,12(sp)
+80000154:	0141                	addi	sp,sp,16
+80000156:	8082                	ret
+
+80000158 <_start>:
+_start():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:36
+.cfi_startproc
+.cfi_undefined ra
+
+  /* This is a bit funky: it's not usually sane for _start to return, but in
+   * this case we actually want to in order to signal an error to the METAL. */
+  mv s0, ra
+80000158:	8406                	mv	s0,ra
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:44
+   * safely perform any access that may be relaxed without GP being set.  This
+   * is done with relaxation disabled to avoid relaxing the address calculation
+   * to just "addi gp, gp, 0". */
+.option push
+.option norelax
+  la gp, __global_pointer$
+8000015a:	00001197          	auipc	gp,0x1
+8000015e:	ea618193          	addi	gp,gp,-346 # 80001000 <__global_pointer$>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:50
+.option pop
+
+  /* Stack pointer is expected to be initialized before _start */
+
+  /* If we're not hart 0, skip the initialization work */
+  la t0, __metal_boot_hart
+80000162:	00000293          	li	t0,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:51
+  bne a0, t0, _skip_init
+80000166:	0c551763          	bne	a0,t0,80000234 <_skip_init>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:60
+   * boot and then need to get relocated into a non-persistant writable memory
+   * before C code can execute.  If this is the case we do so here.  This step
+   * is optional: if the METAL provides an environment in which this relocation
+   * is not necessary then it must simply set metal_segment_data_source_start to
+   * be equal to metal_segment_data_target_start. */
+  la t0, metal_segment_data_source_start
+8000016a:	00000297          	auipc	t0,0x0
+8000016e:	63628293          	addi	t0,t0,1590 # 800007a0 <metal_segment_data_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:61
+  la t1, metal_segment_data_target_start
+80000172:	00000317          	auipc	t1,0x0
+80000176:	62e30313          	addi	t1,t1,1582 # 800007a0 <metal_segment_data_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:62
+  la t2, metal_segment_data_target_end
+8000017a:	81018393          	addi	t2,gp,-2032 # 80000810 <__tls_base>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:64
+
+  beq t0, t1, 2f
+8000017e:	00628c63          	beq	t0,t1,80000196 <_start+0x3e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:65
+  bge t1, t2, 2f
+80000182:	00735a63          	bge	t1,t2,80000196 <_start+0x3e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:69
+
+1:
+#if __riscv_xlen == 32
+  lw   a0, 0(t0)
+80000186:	0002a503          	lw	a0,0(t0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:70
+  addi t0, t0, 4
+8000018a:	0291                	addi	t0,t0,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:71
+  sw   a0, 0(t1)
+8000018c:	00a32023          	sw	a0,0(t1)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:72
+  addi t1, t1, 4
+80000190:	0311                	addi	t1,t1,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:73
+  blt  t1, t2, 1b
+80000192:	fe734ae3          	blt	t1,t2,80000186 <_start+0x2e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:84
+  blt  t1, t2, 1b
+#endif
+2:
+
+  /* Copy the ITIM section */
+  la t0, metal_segment_itim_source_start
+80000196:	00000297          	auipc	t0,0x0
+8000019a:	14a28293          	addi	t0,t0,330 # 800002e0 <metal_segment_itim_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:85
+  la t1, metal_segment_itim_target_start
+8000019e:	88000317          	auipc	t1,0x88000
+800001a2:	e6230313          	addi	t1,t1,-414 # 8000000 <metal_segment_itim_target_end>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:86
+  la t2, metal_segment_itim_target_end
+800001a6:	88000397          	auipc	t2,0x88000
+800001aa:	e5a38393          	addi	t2,t2,-422 # 8000000 <metal_segment_itim_target_end>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:88
+
+  beq t0, t1, 2f
+800001ae:	00628c63          	beq	t0,t1,800001c6 <_start+0x6e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:89
+  bge t1, t2, 2f
+800001b2:	00735a63          	bge	t1,t2,800001c6 <_start+0x6e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:93
+
+1:
+#if __riscv_xlen == 32
+  lw   a0, 0(t0)
+800001b6:	0002a503          	lw	a0,0(t0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:94
+  addi t0, t0, 4
+800001ba:	0291                	addi	t0,t0,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:95
+  sw   a0, 0(t1)
+800001bc:	00a32023          	sw	a0,0(t1)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:96
+  addi t1, t1, 4
+800001c0:	0311                	addi	t1,t1,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:97
+  blt  t1, t2, 1b
+800001c2:	fe734ae3          	blt	t1,t2,800001b6 <_start+0x5e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:109
+#endif
+2:
+
+  /* Fence all subsequent instruction fetches until after the ITIM writes
+     complete */
+  fence.i
+800001c6:	0000100f          	fence.i
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:114
+
+2:
+
+  /* Copy the LIM section */
+  la t0, metal_segment_lim_source_start
+800001ca:	00000297          	auipc	t0,0x0
+800001ce:	11628293          	addi	t0,t0,278 # 800002e0 <metal_segment_itim_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:115
+  la t1, metal_segment_lim_target_start
+800001d2:	00000317          	auipc	t1,0x0
+800001d6:	10e30313          	addi	t1,t1,270 # 800002e0 <metal_segment_itim_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:116
+  la t2, metal_segment_lim_target_end
+800001da:	00000397          	auipc	t2,0x0
+800001de:	10638393          	addi	t2,t2,262 # 800002e0 <metal_segment_itim_source_start>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:118
+
+  beq t0, t1, 2f
+800001e2:	00628c63          	beq	t0,t1,800001fa <_start+0xa2>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:119
+  bge t1, t2, 2f
+800001e6:	00735a63          	bge	t1,t2,800001fa <_start+0xa2>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:123
+
+1:
+#if __riscv_xlen == 32
+  lw   a0, 0(t0)
+800001ea:	0002a503          	lw	a0,0(t0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:124
+  addi t0, t0, 4
+800001ee:	0291                	addi	t0,t0,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:125
+  sw   a0, 0(t1)
+800001f0:	00a32023          	sw	a0,0(t1)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:126
+  addi t1, t1, 4
+800001f4:	0311                	addi	t1,t1,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:127
+  blt  t1, t2, 1b
+800001f6:	fe734ae3          	blt	t1,t2,800001ea <_start+0x92>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:139
+#endif
+2:
+
+  /* Fence all subsequent instruction fetches until after the LIM writes
+     complete */
+  fence.i
+800001fa:	0000100f          	fence.i
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:142
+
+  /* Zero the BSS segment. */
+  la t1, metal_segment_bss_target_start
+800001fe:	81018313          	addi	t1,gp,-2032 # 80000810 <__tls_base>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:143
+  la t2, metal_segment_bss_target_end
+80000202:	8a818393          	addi	t2,gp,-1880 # 800008a8 <metal_segment_bss_target_end>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:145
+
+  bge t1, t2, 2f
+80000206:	00735763          	bge	t1,t2,80000214 <_start+0xbc>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:149
+
+1:
+#if __riscv_xlen == 32
+  sw   x0, 0(t1)
+8000020a:	00032023          	sw	zero,0(t1)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:150
+  addi t1, t1, 4
+8000020e:	0311                	addi	t1,t1,4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:151
+  blt  t1, t2, 1b
+80000210:	fe734de3          	blt	t1,t2,8000020a <_start+0xb2>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:161
+#endif
+2:
+
+  /* Set TLS pointer */
+  .weak __tls_base	
+  la tp, __tls_base
+80000214:	81018213          	addi	tp,gp,-2032 # 80000810 <__tls_base>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:166
+
+  /* At this point we're in an environment that can execute C code.  The first
+   * thing to do is to make the callback to the parent environment if it's been
+   * requested to do so. */
+  beqz a2, 1f
+80000218:	c211                	beqz	a2,8000021c <_start+0xc4>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:167
+  jalr a2
+8000021a:	9602                	jalr	a2
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:171
+1:
+
+  /* The RISC-V port only uses new-style constructors and destructors. */
+  la a0, __libc_fini_array
+8000021c:	00000517          	auipc	a0,0x0
+80000220:	27a50513          	addi	a0,a0,634 # 80000496 <__libc_fini_array>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:172
+  call atexit
+80000224:	2c3d                	jal	80000462 <atexit>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:173
+  call __libc_init_array
+80000226:	2465                	jal	800004ce <__libc_init_array>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:177
+
+  /* Register metal_fini_run as a destructor and call metal_init_run to
+   * run and setup Metal constructors */
+  la a0, metal_fini_run
+80000228:	00000517          	auipc	a0,0x0
+8000022c:	54c50513          	addi	a0,a0,1356 # 80000774 <metal_fini_run>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:178
+  call atexit
+80000230:	2c0d                	jal	80000462 <atexit>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:179
+  call metal_init_run
+80000232:	233d                	jal	80000760 <metal_init_run>
+
+80000234 <_skip_init>:
+_skip_init():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:185
+
+_skip_init:
+
+  /* Synchronize harts so that secondary harts wait until hart 0 finishes
+     initializing */
+  call __metal_synchronize_harts
+80000234:	3f19                	jal	8000014a <__metal_synchronize_harts>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:188
+
+  /* Disable and clear all interrupt sources */
+  li   a3, -1
+80000236:	56fd                	li	a3,-1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:189
+  csrc mie, a3
+80000238:	3046b073          	csrc	mie,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:190
+  csrc mip, a3
+8000023c:	3446b073          	csrc	mip,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:194
+
+  /* The delegation CSRs exist if user mode interrupts (N extension) or
+   * supervisor mode (S extension) are supported */
+  csrr a5, misa
+80000240:	301027f3          	csrr	a5,misa
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:195
+  lui  a4, 0x42
+80000244:	00042737          	lui	a4,0x42
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:196
+  and  a4, a4, a5
+80000248:	8f7d                	and	a4,a4,a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:197
+  beqz a4, 1f
+8000024a:	c709                	beqz	a4,80000254 <_skip_init+0x20>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:198
+  csrc mideleg, a3
+8000024c:	3036b073          	csrc	mideleg,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:199
+  csrc medeleg, a3
+80000250:	3026b073          	csrc	medeleg,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:203
+1:
+
+  /* The satp CSR exists if supervisor mode (S extension) is supported */
+  lui  a4, 0x40
+80000254:	00040737          	lui	a4,0x40
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:204
+  and  a4, a4, a5
+80000258:	8f7d                	and	a4,a4,a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:205
+  beqz a4, 1f
+8000025a:	c319                	beqz	a4,80000260 <_skip_init+0x2c>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:206
+  csrc satp, a3
+8000025c:	1806b073          	csrc	satp,a3
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:210
+1:
+
+  /* Check RISC-V isa and enable FS bits if Floating Point architecture. */
+  li   a4, 0x10028
+80000260:	00010737          	lui	a4,0x10
+80000264:	02870713          	addi	a4,a4,40 # 10028 <__heap_size+0xf828>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:211
+  and  a5, a5, a4
+80000268:	8ff9                	and	a5,a5,a4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:212
+  beqz a5, 1f
+8000026a:	cb89                	beqz	a5,8000027c <_skip_init+0x48>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:213
+  csrr a5, mstatus
+8000026c:	300027f3          	csrr	a5,mstatus
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:214
+  lui  a4, 0x2
+80000270:	6709                	lui	a4,0x2
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:215
+  or   a5, a5, a4
+80000272:	8fd9                	or	a5,a5,a4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:216
+  csrw mstatus, a5
+80000274:	30079073          	csrw	mstatus,a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:217
+  csrwi fcsr, 0
+80000278:	00305073          	csrwi	fcsr,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:221
+1:
+
+  /* Check for vector extension support and enable it if found */
+  csrr a5, misa
+8000027c:	301027f3          	csrr	a5,misa
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:222
+  li a4, 0x200000
+80000280:	00200737          	lui	a4,0x200
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:223
+  and a5, a5, a4
+80000284:	8ff9                	and	a5,a5,a4
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:224
+  beqz a5, 1f
+80000286:	c799                	beqz	a5,80000294 <_skip_init+0x60>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:225
+  csrr a5, mstatus
+80000288:	300027f3          	csrr	a5,mstatus
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:226
+  ori a5, a5, 0x200
+8000028c:	2007e793          	ori	a5,a5,512
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:227
+  csrw mstatus, a5
+80000290:	30079073          	csrw	mstatus,a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:233
+1:
+
+  /* This is a C runtime, so main() is defined to have some arguments.  Since
+   * there's nothing sane the METAL can pass we don't bother with that but
+   * instead just setup as close to a NOP as we can. */
+  li a0, 1     /* argc=1 */
+80000294:	4505                	li	a0,1
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:234
+  la a1, argv  /* argv = {"libgloss", NULL} */
+80000296:	00000597          	auipc	a1,0x0
+8000029a:	03858593          	addi	a1,a1,56 # 800002ce <argv>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:235
+  la a2, envp  /* envp = {NULL} */
+8000029e:	00000617          	auipc	a2,0x0
+800002a2:	03460613          	addi	a2,a2,52 # 800002d2 <envp>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:236
+  call secondary_main
+800002a6:	2029                	jal	800002b0 <secondary_main>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:242
+
+  /* Call exit to handle libc's cleanup routines.  Under normal contains this
+   * shouldn't even get called, but I'm still not using a tail call here
+   * because returning to the METAL is the right thing to do in pathological
+   * situations. */
+  call exit
+800002a8:	22d1                	jal	8000046c <exit>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:247
+
+  /* And here's where we return.  Again, it's a bit odd but the METAL defines
+   * this as a bad idea (ie, as opposed to leaving it undefined) and at this
+   * point it's really the only thing left to do. */
+  mv ra, s0
+800002aa:	80a2                	mv	ra,s0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:248
+  ret
+800002ac:	8082                	ret
+
+800002ae <_fini>:
+_init():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:260
+.type   _init, @function
+.global _fini
+.type   _fini, @function
+_init:
+_fini:
+  ret
+800002ae:	8082                	ret
+
+800002b0 <secondary_main>:
+secondary_main():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:271
+.weak   secondary_main
+.global secondary_main
+.type   secondary_main, @function
+
+secondary_main:
+  addi sp, sp, -16
+800002b0:	1141                	addi	sp,sp,-16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:273
+#if __riscv_xlen == 32
+  sw ra, 4(sp)
+800002b2:	c206                	sw	ra,4(sp)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:277
+#else
+  sd ra, 8(sp)
+#endif
+  csrr t0, mhartid
+800002b4:	f14022f3          	csrr	t0,mhartid
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:278
+  la t1, __metal_boot_hart
+800002b8:	00000313          	li	t1,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:279
+  beq t0, t1, 2f
+800002bc:	00628563          	beq	t0,t1,800002c6 <secondary_main+0x16>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:281
+1:
+  wfi
+800002c0:	10500073          	wfi
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:282
+  j 1b
+800002c4:	bff5                	j	800002c0 <secondary_main+0x10>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:284
+2:
+  call main
+800002c6:	28b9                	jal	80000324 <main>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:286
+#if __riscv_xlen == 32
+  lw ra, 4(sp)
+800002c8:	4092                	lw	ra,4(sp)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:290
+#else
+  ld ra, 8(sp)
+#endif
+  addi sp, sp, 16
+800002ca:	0141                	addi	sp,sp,16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/crt0.S:291
+  ret
+800002cc:	8082                	ret
+
+Disassembly of section .text:
+
+800002e0 <test>:
+test():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:183
+ 	free(C);
+
+ 	return cycle_count;
+}
+
+void test() {
+800002e0:	1101                	addi	sp,sp,-32
+800002e2:	ce22                	sw	s0,28(sp)
+800002e4:	1000                	addi	s0,sp,32
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:184
+	volatile uint8_t *flag = (volatile uint8_t*) 0x80000000;
+800002e6:	800007b7          	lui	a5,0x80000
+800002ea:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:185
+	*flag = 1;
+800002ee:	fec42783          	lw	a5,-20(s0)
+800002f2:	4705                	li	a4,1
+800002f4:	00e78023          	sb	a4,0(a5) # 80000000 <metal_segment_heap_target_end+0xffffeb50>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:186
+	volatile uint8_t x = *flag;
+800002f8:	fec42783          	lw	a5,-20(s0)
+800002fc:	0007c783          	lbu	a5,0(a5)
+80000300:	0ff7f793          	andi	a5,a5,255
+80000304:	fef405a3          	sb	a5,-21(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:187
+	flag = (volatile uint8_t*) 0x80004004;
+80000308:	800047b7          	lui	a5,0x80004
+8000030c:	0791                	addi	a5,a5,4
+8000030e:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:188
+	*flag = 10;
+80000312:	fec42783          	lw	a5,-20(s0)
+80000316:	4729                	li	a4,10
+80000318:	00e78023          	sb	a4,0(a5) # 80004000 <metal_segment_heap_target_end+0x2b50>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:189
+}
+8000031c:	0001                	nop
+8000031e:	4472                	lw	s0,28(sp)
+80000320:	6105                	addi	sp,sp,32
+80000322:	8082                	ret
+
+80000324 <main>:
+main():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:314
+	}
+
+	return;
+}
+
+int main() {
+80000324:	1141                	addi	sp,sp,-16
+80000326:	c606                	sw	ra,12(sp)
+80000328:	c422                	sw	s0,8(sp)
+8000032a:	0800                	addi	s0,sp,16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:316
+	/* AP initialization */
+	warmup_ap();
+8000032c:	2811                	jal	80000340 <warmup_ap>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:317
+	test();
+8000032e:	3f4d                	jal	800002e0 <test>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:329
+	//volatile int test = ap_computing_horizontal_test(MULT, LEFT, 14);
+	//volatile int test = ap_computing_vertical_test(ADD, LEFT, 14);
+	//report_cycles_vector_op_cpu();
+	//vector_cpu_op(14, AP_COL_SIZE);
+
+	asm volatile ("WFI");
+80000330:	10500073          	wfi
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:331
+
+	return 0;
+80000334:	4781                	li	a5,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/hello.c:332
+}
+80000336:	853e                	mv	a0,a5
+80000338:	40b2                	lw	ra,12(sp)
+8000033a:	4422                	lw	s0,8(sp)
+8000033c:	0141                	addi	sp,sp,16
+8000033e:	8082                	ret
+
+80000340 <warmup_ap>:
+warmup_ap():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:10
+{
+  for (int i = 0; i < delay_in_nops; i++) asm volatile("nop");
+}
+
+void warmup_ap()
+{
+80000340:	1141                	addi	sp,sp,-16
+80000342:	c622                	sw	s0,12(sp)
+80000344:	0800                	addi	s0,sp,16
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:12
+  // Init Mode reg - setting left internal col
+  *AP_MODE = 0x0;
+80000346:	800047b7          	lui	a5,0x80004
+8000034a:	30078793          	addi	a5,a5,768 # 80004300 <metal_segment_heap_target_end+0x2e50>
+8000034e:	0007a023          	sw	zero,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:15
+
+  // Block AP Wraper if and set and release reset
+  *AP_CONTROL = 0x10001;
+80000352:	800047b7          	lui	a5,0x80004
+80000356:	30478793          	addi	a5,a5,772 # 80004304 <metal_segment_heap_target_end+0x2e54>
+8000035a:	6741                	lui	a4,0x10
+8000035c:	0705                	addi	a4,a4,1
+8000035e:	c398                	sw	a4,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:16
+  *AP_CONTROL = 0x10000;
+80000360:	800047b7          	lui	a5,0x80004
+80000364:	30478793          	addi	a5,a5,772 # 80004304 <metal_segment_heap_target_end+0x2e54>
+80000368:	6741                	lui	a4,0x10
+8000036a:	c398                	sw	a4,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:19
+
+  // Init Mode reg - Set right internal col
+  *AP_MODE = 0x1000000;
+8000036c:	800047b7          	lui	a5,0x80004
+80000370:	30078793          	addi	a5,a5,768 # 80004300 <metal_segment_heap_target_end+0x2e50>
+80000374:	01000737          	lui	a4,0x1000
+80000378:	c398                	sw	a4,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:22
+
+  // Block AP Wraper if and set and release reset
+  *AP_CONTROL = 0x10001;
+8000037a:	800047b7          	lui	a5,0x80004
+8000037e:	30478793          	addi	a5,a5,772 # 80004304 <metal_segment_heap_target_end+0x2e54>
+80000382:	6741                	lui	a4,0x10
+80000384:	0705                	addi	a4,a4,1
+80000386:	c398                	sw	a4,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:23
+  *AP_CONTROL = 0x10000;
+80000388:	800047b7          	lui	a5,0x80004
+8000038c:	30478793          	addi	a5,a5,772 # 80004304 <metal_segment_heap_target_end+0x2e54>
+80000390:	6741                	lui	a4,0x10
+80000392:	c398                	sw	a4,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:26
+
+  // Relase AP Wrapper interface and put a default value for control
+  *AP_MODE = 0x0;
+80000394:	800047b7          	lui	a5,0x80004
+80000398:	30078793          	addi	a5,a5,768 # 80004300 <metal_segment_heap_target_end+0x2e50>
+8000039c:	0007a023          	sw	zero,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:27
+  *AP_CONTROL = 0x00000;
+800003a0:	800047b7          	lui	a5,0x80004
+800003a4:	30478793          	addi	a5,a5,772 # 80004304 <metal_segment_heap_target_end+0x2e54>
+800003a8:	0007a023          	sw	zero,0(a5)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/src/ap_hal.c:28
+}
+800003ac:	0001                	nop
+800003ae:	4432                	lw	s0,12(sp)
+800003b0:	0141                	addi	sp,sp,16
+800003b2:	8082                	ret
+
+800003b4 <__metal_driver_sifive_test0_base>:
+__metal_driver_sifive_test0_base():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/bsp/build/debug/./metal/machine.h:719
+
+
+
+/* --------------------- sifive_test0 ------------ */
+static __inline__ unsigned long __metal_driver_sifive_test0_base(const struct __metal_shutdown *sd)
+{
+800003b4:	1101                	addi	sp,sp,-32
+800003b6:	ce22                	sw	s0,28(sp)
+800003b8:	1000                	addi	s0,sp,32
+800003ba:	fea42623          	sw	a0,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/bsp/build/debug/./metal/machine.h:720
+	if ((uintptr_t)sd == (uintptr_t)&__metal_dt_teststatus_4000) {
+800003be:	fec42703          	lw	a4,-20(s0)
+800003c2:	800017b7          	lui	a5,0x80001
+800003c6:	80478793          	addi	a5,a5,-2044 # 80000804 <metal_segment_heap_target_end+0xfffff354>
+800003ca:	00f71463          	bne	a4,a5,800003d2 <__metal_driver_sifive_test0_base+0x1e>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/bsp/build/debug/./metal/machine.h:721
+		return METAL_SIFIVE_TEST0_4000_BASE_ADDRESS;
+800003ce:	6791                	lui	a5,0x4
+800003d0:	a011                	j	800003d4 <__metal_driver_sifive_test0_base+0x20>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/bsp/build/debug/./metal/machine.h:724
+	}
+	else {
+		return 0;
+800003d2:	4781                	li	a5,0
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/bsp/build/debug/./metal/machine.h:726
+	}
+}
+800003d4:	853e                	mv	a0,a5
+800003d6:	4472                	lw	s0,28(sp)
+800003d8:	6105                	addi	sp,sp,32
+800003da:	8082                	ret
+
+800003dc <__metal_driver_sifive_test0_exit>:
+__metal_driver_sifive_test0_exit():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:18
+#include <metal/io.h>
+
+void __metal_driver_sifive_test0_exit(const struct __metal_shutdown *sd,
+                                      int code) __attribute__((noreturn));
+void __metal_driver_sifive_test0_exit(const struct __metal_shutdown *sd,
+                                      int code) {
+800003dc:	7179                	addi	sp,sp,-48
+800003de:	d606                	sw	ra,44(sp)
+800003e0:	d422                	sw	s0,40(sp)
+800003e2:	1800                	addi	s0,sp,48
+800003e4:	fca42e23          	sw	a0,-36(s0)
+800003e8:	fcb42c23          	sw	a1,-40(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:19
+    long base = __metal_driver_sifive_test0_base(sd);
+800003ec:	fdc42503          	lw	a0,-36(s0)
+800003f0:	37d1                	jal	800003b4 <__metal_driver_sifive_test0_base>
+800003f2:	87aa                	mv	a5,a0
+800003f4:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:20
+    uint32_t out = (code << 16) + (code == 0 ? 0x5555 : 0x3333);
+800003f8:	fd842783          	lw	a5,-40(s0)
+800003fc:	01079713          	slli	a4,a5,0x10
+80000400:	fd842783          	lw	a5,-40(s0)
+80000404:	e789                	bnez	a5,8000040e <__metal_driver_sifive_test0_exit+0x32>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:20 (discriminator 1)
+80000406:	6795                	lui	a5,0x5
+80000408:	55578793          	addi	a5,a5,1365 # 5555 <__heap_size+0x4d55>
+8000040c:	a021                	j	80000414 <__metal_driver_sifive_test0_exit+0x38>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:20 (discriminator 2)
+8000040e:	678d                	lui	a5,0x3
+80000410:	33378793          	addi	a5,a5,819 # 3333 <__heap_size+0x2b33>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:20 (discriminator 4)
+80000414:	97ba                	add	a5,a5,a4
+80000416:	fef42423          	sw	a5,-24(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:22 (discriminator 1)
+    while (1) {
+        __METAL_ACCESS_ONCE((
+8000041a:	fec42783          	lw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_test0.c:23 (discriminator 1)
+            __metal_io_u32 *)(base + METAL_SIFIVE_TEST0_FINISHER_OFFSET)) = out;
+8000041e:	fe842703          	lw	a4,-24(s0)
+80000422:	c398                	sw	a4,0(a5)
+80000424:	bfdd                	j	8000041a <__metal_driver_sifive_test0_exit+0x3e>
+
+80000426 <__metal_shutdown_exit>:
+__metal_shutdown_exit():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:26
+};
+
+__inline__ void __metal_shutdown_exit(const struct __metal_shutdown *sd,
+                                      int code) __attribute__((noreturn));
+__inline__ void __metal_shutdown_exit(const struct __metal_shutdown *sd,
+                                      int code) {
+80000426:	1101                	addi	sp,sp,-32
+80000428:	ce06                	sw	ra,28(sp)
+8000042a:	cc22                	sw	s0,24(sp)
+8000042c:	1000                	addi	s0,sp,32
+8000042e:	fea42623          	sw	a0,-20(s0)
+80000432:	feb42423          	sw	a1,-24(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:27
+    sd->vtable->exit(sd, code);
+80000436:	fec42783          	lw	a5,-20(s0)
+8000043a:	439c                	lw	a5,0(a5)
+8000043c:	439c                	lw	a5,0(a5)
+8000043e:	fe842583          	lw	a1,-24(s0)
+80000442:	fec42503          	lw	a0,-20(s0)
+80000446:	9782                	jalr	a5
+
+80000448 <metal_shutdown>:
+metal_shutdown():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/shutdown.c:11
+
+extern __inline__ void __metal_shutdown_exit(const struct __metal_shutdown *sd,
+                                             int code);
+
+#if defined(__METAL_DT_SHUTDOWN_HANDLE)
+void metal_shutdown(int code) {
+80000448:	1101                	addi	sp,sp,-32
+8000044a:	ce06                	sw	ra,28(sp)
+8000044c:	cc22                	sw	s0,24(sp)
+8000044e:	1000                	addi	s0,sp,32
+80000450:	fea42623          	sw	a0,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/shutdown.c:12
+    __metal_shutdown_exit(__METAL_DT_SHUTDOWN_HANDLE, code);
+80000454:	fec42583          	lw	a1,-20(s0)
+80000458:	800017b7          	lui	a5,0x80001
+8000045c:	80478513          	addi	a0,a5,-2044 # 80000804 <metal_segment_heap_target_end+0xfffff354>
+80000460:	37d9                	jal	80000426 <__metal_shutdown_exit>
+
+80000462 <atexit>:
+atexit():
+80000462:	85aa                	mv	a1,a0
+80000464:	4681                	li	a3,0
+80000466:	4601                	li	a2,0
+80000468:	4501                	li	a0,0
+8000046a:	a0f9                	j	80000538 <__register_exitproc>
+
+8000046c <exit>:
+exit():
+8000046c:	1141                	addi	sp,sp,-16
+8000046e:	c422                	sw	s0,8(sp)
+80000470:	c606                	sw	ra,12(sp)
+80000472:	00000797          	auipc	a5,0x0
+80000476:	14a78793          	addi	a5,a5,330 # 800005bc <__call_exitprocs>
+8000047a:	842a                	mv	s0,a0
+8000047c:	c399                	beqz	a5,80000482 <exit+0x16>
+8000047e:	4581                	li	a1,0
+80000480:	2a35                	jal	800005bc <__call_exitprocs>
+80000482:	00000797          	auipc	a5,0x0
+80000486:	37e78793          	addi	a5,a5,894 # 80000800 <_global_impure_ptr>
+8000048a:	4388                	lw	a0,0(a5)
+8000048c:	551c                	lw	a5,40(a0)
+8000048e:	c391                	beqz	a5,80000492 <exit+0x26>
+80000490:	9782                	jalr	a5
+80000492:	8522                	mv	a0,s0
+80000494:	2cd5                	jal	80000788 <_exit>
+
+80000496 <__libc_fini_array>:
+__libc_fini_array():
+80000496:	1141                	addi	sp,sp,-16
+80000498:	00000797          	auipc	a5,0x0
+8000049c:	e3878793          	addi	a5,a5,-456 # 800002d0 <__fini_array_end>
+800004a0:	c422                	sw	s0,8(sp)
+800004a2:	00000417          	auipc	s0,0x0
+800004a6:	e2e40413          	addi	s0,s0,-466 # 800002d0 <__fini_array_end>
+800004aa:	8c1d                	sub	s0,s0,a5
+800004ac:	c226                	sw	s1,4(sp)
+800004ae:	c606                	sw	ra,12(sp)
+800004b0:	8409                	srai	s0,s0,0x2
+800004b2:	84be                	mv	s1,a5
+800004b4:	e411                	bnez	s0,800004c0 <__libc_fini_array+0x2a>
+800004b6:	40b2                	lw	ra,12(sp)
+800004b8:	4422                	lw	s0,8(sp)
+800004ba:	4492                	lw	s1,4(sp)
+800004bc:	0141                	addi	sp,sp,16
+800004be:	8082                	ret
+800004c0:	147d                	addi	s0,s0,-1
+800004c2:	00241793          	slli	a5,s0,0x2
+800004c6:	97a6                	add	a5,a5,s1
+800004c8:	439c                	lw	a5,0(a5)
+800004ca:	9782                	jalr	a5
+800004cc:	b7e5                	j	800004b4 <__libc_fini_array+0x1e>
+
+800004ce <__libc_init_array>:
+__libc_init_array():
+800004ce:	1141                	addi	sp,sp,-16
+800004d0:	00000797          	auipc	a5,0x0
+800004d4:	e0078793          	addi	a5,a5,-512 # 800002d0 <__fini_array_end>
+800004d8:	c422                	sw	s0,8(sp)
+800004da:	00000417          	auipc	s0,0x0
+800004de:	df640413          	addi	s0,s0,-522 # 800002d0 <__fini_array_end>
+800004e2:	8c1d                	sub	s0,s0,a5
+800004e4:	c226                	sw	s1,4(sp)
+800004e6:	c04a                	sw	s2,0(sp)
+800004e8:	c606                	sw	ra,12(sp)
+800004ea:	8409                	srai	s0,s0,0x2
+800004ec:	4481                	li	s1,0
+800004ee:	893e                	mv	s2,a5
+800004f0:	02849663          	bne	s1,s0,8000051c <__libc_init_array+0x4e>
+800004f4:	00000797          	auipc	a5,0x0
+800004f8:	ddc78793          	addi	a5,a5,-548 # 800002d0 <__fini_array_end>
+800004fc:	00000417          	auipc	s0,0x0
+80000500:	dd440413          	addi	s0,s0,-556 # 800002d0 <__fini_array_end>
+80000504:	8c1d                	sub	s0,s0,a5
+80000506:	8409                	srai	s0,s0,0x2
+80000508:	4481                	li	s1,0
+8000050a:	893e                	mv	s2,a5
+8000050c:	00849f63          	bne	s1,s0,8000052a <__libc_init_array+0x5c>
+80000510:	40b2                	lw	ra,12(sp)
+80000512:	4422                	lw	s0,8(sp)
+80000514:	4492                	lw	s1,4(sp)
+80000516:	4902                	lw	s2,0(sp)
+80000518:	0141                	addi	sp,sp,16
+8000051a:	8082                	ret
+8000051c:	00249793          	slli	a5,s1,0x2
+80000520:	97ca                	add	a5,a5,s2
+80000522:	439c                	lw	a5,0(a5)
+80000524:	0485                	addi	s1,s1,1
+80000526:	9782                	jalr	a5
+80000528:	b7e1                	j	800004f0 <__libc_init_array+0x22>
+8000052a:	00249793          	slli	a5,s1,0x2
+8000052e:	97ca                	add	a5,a5,s2
+80000530:	439c                	lw	a5,0(a5)
+80000532:	0485                	addi	s1,s1,1
+80000534:	9782                	jalr	a5
+80000536:	bfd9                	j	8000050c <__libc_init_array+0x3e>
+
+80000538 <__register_exitproc>:
+__register_exitproc():
+80000538:	00000797          	auipc	a5,0x0
+8000053c:	2d878793          	addi	a5,a5,728 # 80000810 <__tls_base>
+80000540:	439c                	lw	a5,0(a5)
+80000542:	8e2a                	mv	t3,a0
+80000544:	e38d                	bnez	a5,80000566 <__register_exitproc+0x2e>
+80000546:	81c18713          	addi	a4,gp,-2020 # 8000081c <_global_atexit0>
+8000054a:	00000797          	auipc	a5,0x0
+8000054e:	2ce7a323          	sw	a4,710(a5) # 80000810 <__tls_base>
+80000552:	80000517          	auipc	a0,0x80000
+80000556:	aae50513          	addi	a0,a0,-1362 # 0 <__metal_boot_hart>
+8000055a:	87ba                	mv	a5,a4
+8000055c:	c509                	beqz	a0,80000566 <__register_exitproc+0x2e>
+8000055e:	411c                	lw	a5,0(a0)
+80000560:	8af1a223          	sw	a5,-1884(gp) # 800008a4 <_global_atexit0+0x88>
+80000564:	87ba                	mv	a5,a4
+80000566:	43d8                	lw	a4,4(a5)
+80000568:	487d                	li	a6,31
+8000056a:	557d                	li	a0,-1
+8000056c:	04e84763          	blt	a6,a4,800005ba <__register_exitproc+0x82>
+80000570:	020e0e63          	beqz	t3,800005ac <__register_exitproc+0x74>
+80000574:	0887a803          	lw	a6,136(a5)
+80000578:	04080163          	beqz	a6,800005ba <__register_exitproc+0x82>
+8000057c:	00271893          	slli	a7,a4,0x2
+80000580:	98c2                	add	a7,a7,a6
+80000582:	00c8a023          	sw	a2,0(a7)
+80000586:	10082303          	lw	t1,256(a6)
+8000058a:	4605                	li	a2,1
+8000058c:	00e61633          	sll	a2,a2,a4
+80000590:	00c36333          	or	t1,t1,a2
+80000594:	10682023          	sw	t1,256(a6)
+80000598:	08d8a023          	sw	a3,128(a7)
+8000059c:	4689                	li	a3,2
+8000059e:	00de1763          	bne	t3,a3,800005ac <__register_exitproc+0x74>
+800005a2:	10482683          	lw	a3,260(a6)
+800005a6:	8e55                	or	a2,a2,a3
+800005a8:	10c82223          	sw	a2,260(a6)
+800005ac:	00170693          	addi	a3,a4,1 # 10001 <__heap_size+0xf801>
+800005b0:	070a                	slli	a4,a4,0x2
+800005b2:	c3d4                	sw	a3,4(a5)
+800005b4:	97ba                	add	a5,a5,a4
+800005b6:	c78c                	sw	a1,8(a5)
+800005b8:	4501                	li	a0,0
+800005ba:	8082                	ret
+
+800005bc <__call_exitprocs>:
+__call_exitprocs():
+800005bc:	7179                	addi	sp,sp,-48
+800005be:	cc52                	sw	s4,24(sp)
+800005c0:	ca56                	sw	s5,20(sp)
+800005c2:	c85a                	sw	s6,16(sp)
+800005c4:	c65e                	sw	s7,12(sp)
+800005c6:	d606                	sw	ra,44(sp)
+800005c8:	d422                	sw	s0,40(sp)
+800005ca:	d226                	sw	s1,36(sp)
+800005cc:	d04a                	sw	s2,32(sp)
+800005ce:	ce4e                	sw	s3,28(sp)
+800005d0:	c462                	sw	s8,8(sp)
+800005d2:	8b2a                	mv	s6,a0
+800005d4:	8a2e                	mv	s4,a1
+800005d6:	81018a93          	addi	s5,gp,-2032 # 80000810 <__tls_base>
+800005da:	4b85                	li	s7,1
+800005dc:	000aa403          	lw	s0,0(s5)
+800005e0:	c811                	beqz	s0,800005f4 <__call_exitprocs+0x38>
+800005e2:	4044                	lw	s1,4(s0)
+800005e4:	08842983          	lw	s3,136(s0)
+800005e8:	fff48913          	addi	s2,s1,-1
+800005ec:	048a                	slli	s1,s1,0x2
+800005ee:	94a2                	add	s1,s1,s0
+800005f0:	00095e63          	bgez	s2,8000060c <__call_exitprocs+0x50>
+800005f4:	50b2                	lw	ra,44(sp)
+800005f6:	5422                	lw	s0,40(sp)
+800005f8:	5492                	lw	s1,36(sp)
+800005fa:	5902                	lw	s2,32(sp)
+800005fc:	49f2                	lw	s3,28(sp)
+800005fe:	4a62                	lw	s4,24(sp)
+80000600:	4ad2                	lw	s5,20(sp)
+80000602:	4b42                	lw	s6,16(sp)
+80000604:	4bb2                	lw	s7,12(sp)
+80000606:	4c22                	lw	s8,8(sp)
+80000608:	6145                	addi	sp,sp,48
+8000060a:	8082                	ret
+8000060c:	000a0e63          	beqz	s4,80000628 <__call_exitprocs+0x6c>
+80000610:	00099563          	bnez	s3,8000061a <__call_exitprocs+0x5e>
+80000614:	197d                	addi	s2,s2,-1
+80000616:	14f1                	addi	s1,s1,-4
+80000618:	bfe1                	j	800005f0 <__call_exitprocs+0x34>
+8000061a:	00291793          	slli	a5,s2,0x2
+8000061e:	97ce                	add	a5,a5,s3
+80000620:	0807a783          	lw	a5,128(a5)
+80000624:	ff4798e3          	bne	a5,s4,80000614 <__call_exitprocs+0x58>
+80000628:	4058                	lw	a4,4(s0)
+8000062a:	40dc                	lw	a5,4(s1)
+8000062c:	177d                	addi	a4,a4,-1
+8000062e:	03271863          	bne	a4,s2,8000065e <__call_exitprocs+0xa2>
+80000632:	01242223          	sw	s2,4(s0)
+80000636:	dff9                	beqz	a5,80000614 <__call_exitprocs+0x58>
+80000638:	00442c03          	lw	s8,4(s0)
+8000063c:	00098863          	beqz	s3,8000064c <__call_exitprocs+0x90>
+80000640:	1009a683          	lw	a3,256(s3)
+80000644:	012b9733          	sll	a4,s7,s2
+80000648:	8ef9                	and	a3,a3,a4
+8000064a:	ee89                	bnez	a3,80000664 <__call_exitprocs+0xa8>
+8000064c:	9782                	jalr	a5
+8000064e:	4058                	lw	a4,4(s0)
+80000650:	000aa783          	lw	a5,0(s5)
+80000654:	f98714e3          	bne	a4,s8,800005dc <__call_exitprocs+0x20>
+80000658:	faf40ee3          	beq	s0,a5,80000614 <__call_exitprocs+0x58>
+8000065c:	b741                	j	800005dc <__call_exitprocs+0x20>
+8000065e:	0004a223          	sw	zero,4(s1)
+80000662:	bfd1                	j	80000636 <__call_exitprocs+0x7a>
+80000664:	00291693          	slli	a3,s2,0x2
+80000668:	96ce                	add	a3,a3,s3
+8000066a:	428c                	lw	a1,0(a3)
+8000066c:	1049a683          	lw	a3,260(s3)
+80000670:	8f75                	and	a4,a4,a3
+80000672:	e701                	bnez	a4,8000067a <__call_exitprocs+0xbe>
+80000674:	855a                	mv	a0,s6
+80000676:	9782                	jalr	a5
+80000678:	bfd9                	j	8000064e <__call_exitprocs+0x92>
+8000067a:	852e                	mv	a0,a1
+8000067c:	9782                	jalr	a5
+8000067e:	bfc1                	j	8000064e <__call_exitprocs+0x92>
+
+80000680 <metal_init>:
+metal_init():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:17
+extern metal_constructor_t metal_constructors_start;
+extern metal_constructor_t metal_constructors_end;
+extern metal_destructor_t metal_destructors_start;
+extern metal_destructor_t metal_destructors_end;
+
+void metal_init(void) {
+80000680:	1101                	addi	sp,sp,-32
+80000682:	ce06                	sw	ra,28(sp)
+80000684:	cc22                	sw	s0,24(sp)
+80000686:	1000                	addi	s0,sp,32
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:20
+    /* Make sure the constructors only run once */
+    static int init_done = 0;
+    if (init_done) {
+80000688:	8141a783          	lw	a5,-2028(gp) # 80000814 <init_done.1531>
+8000068c:	ebb9                	bnez	a5,800006e2 <metal_init+0x62>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:23
+        return;
+    }
+    init_done = 1;
+8000068e:	4705                	li	a4,1
+80000690:	80e1aa23          	sw	a4,-2028(gp) # 80000814 <init_done.1531>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:25
+
+    if (&metal_constructors_end <= &metal_constructors_start) {
+80000694:	800007b7          	lui	a5,0x80000
+80000698:	2d078713          	addi	a4,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+8000069c:	800007b7          	lui	a5,0x80000
+800006a0:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+800006a4:	04e7f163          	bgeu	a5,a4,800006e6 <metal_init+0x66>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:29
+        return;
+    }
+
+    metal_constructor_t *funcptr = &metal_constructors_start;
+800006a8:	800007b7          	lui	a5,0x80000
+800006ac:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+800006b0:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:30
+    while (funcptr != &metal_constructors_end) {
+800006b4:	a831                	j	800006d0 <metal_init+0x50>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:31
+        metal_constructor_t func = *funcptr;
+800006b6:	fec42783          	lw	a5,-20(s0)
+800006ba:	439c                	lw	a5,0(a5)
+800006bc:	fef42423          	sw	a5,-24(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:33
+
+        func();
+800006c0:	fe842783          	lw	a5,-24(s0)
+800006c4:	9782                	jalr	a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:35
+
+        funcptr += 1;
+800006c6:	fec42783          	lw	a5,-20(s0)
+800006ca:	0791                	addi	a5,a5,4
+800006cc:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:30
+    while (funcptr != &metal_constructors_end) {
+800006d0:	fec42703          	lw	a4,-20(s0)
+800006d4:	800007b7          	lui	a5,0x80000
+800006d8:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+800006dc:	fcf71de3          	bne	a4,a5,800006b6 <metal_init+0x36>
+800006e0:	a021                	j	800006e8 <metal_init+0x68>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:21
+        return;
+800006e2:	0001                	nop
+800006e4:	a011                	j	800006e8 <metal_init+0x68>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:26
+        return;
+800006e6:	0001                	nop
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:37
+    }
+}
+800006e8:	40f2                	lw	ra,28(sp)
+800006ea:	4462                	lw	s0,24(sp)
+800006ec:	6105                	addi	sp,sp,32
+800006ee:	8082                	ret
+
+800006f0 <metal_fini>:
+metal_fini():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:39
+
+void metal_fini(void) {
+800006f0:	1101                	addi	sp,sp,-32
+800006f2:	ce06                	sw	ra,28(sp)
+800006f4:	cc22                	sw	s0,24(sp)
+800006f6:	1000                	addi	s0,sp,32
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:42
+    /* Make sure the destructors only run once */
+    static int fini_done = 0;
+    if (fini_done) {
+800006f8:	8181a783          	lw	a5,-2024(gp) # 80000818 <fini_done.1540>
+800006fc:	ebb9                	bnez	a5,80000752 <metal_fini+0x62>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:45
+        return;
+    }
+    fini_done = 1;
+800006fe:	4705                	li	a4,1
+80000700:	80e1ac23          	sw	a4,-2024(gp) # 80000818 <fini_done.1540>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:47
+
+    if (&metal_destructors_end <= &metal_destructors_start) {
+80000704:	800007b7          	lui	a5,0x80000
+80000708:	2d078713          	addi	a4,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+8000070c:	800007b7          	lui	a5,0x80000
+80000710:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+80000714:	04e7f163          	bgeu	a5,a4,80000756 <metal_fini+0x66>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:51
+        return;
+    }
+
+    metal_destructor_t *funcptr = &metal_destructors_start;
+80000718:	800007b7          	lui	a5,0x80000
+8000071c:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+80000720:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:52
+    while (funcptr != &metal_destructors_end) {
+80000724:	a831                	j	80000740 <metal_fini+0x50>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:53
+        metal_destructor_t func = *funcptr;
+80000726:	fec42783          	lw	a5,-20(s0)
+8000072a:	439c                	lw	a5,0(a5)
+8000072c:	fef42423          	sw	a5,-24(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:55
+
+        func();
+80000730:	fe842783          	lw	a5,-24(s0)
+80000734:	9782                	jalr	a5
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:57
+
+        funcptr += 1;
+80000736:	fec42783          	lw	a5,-20(s0)
+8000073a:	0791                	addi	a5,a5,4
+8000073c:	fef42623          	sw	a5,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:52
+    while (funcptr != &metal_destructors_end) {
+80000740:	fec42703          	lw	a4,-20(s0)
+80000744:	800007b7          	lui	a5,0x80000
+80000748:	2d078793          	addi	a5,a5,720 # 800002d0 <metal_segment_heap_target_end+0xffffee20>
+8000074c:	fcf71de3          	bne	a4,a5,80000726 <metal_fini+0x36>
+80000750:	a021                	j	80000758 <metal_fini+0x68>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:43
+        return;
+80000752:	0001                	nop
+80000754:	a011                	j	80000758 <metal_fini+0x68>
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:48
+        return;
+80000756:	0001                	nop
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:59
+    }
+}
+80000758:	40f2                	lw	ra,28(sp)
+8000075a:	4462                	lw	s0,24(sp)
+8000075c:	6105                	addi	sp,sp,32
+8000075e:	8082                	ret
+
+80000760 <metal_init_run>:
+metal_init_run():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:69
+ * in the case that users don't want the metal constructors or
+ * destructors to run.
+ */
+
+void metal_init_run(void) __attribute__((weak));
+void metal_init_run(void) { metal_init(); }
+80000760:	1141                	addi	sp,sp,-16
+80000762:	c606                	sw	ra,12(sp)
+80000764:	c422                	sw	s0,8(sp)
+80000766:	0800                	addi	s0,sp,16
+80000768:	3f21                	jal	80000680 <metal_init>
+8000076a:	0001                	nop
+8000076c:	40b2                	lw	ra,12(sp)
+8000076e:	4422                	lw	s0,8(sp)
+80000770:	0141                	addi	sp,sp,16
+80000772:	8082                	ret
+
+80000774 <metal_fini_run>:
+metal_fini_run():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c:72
+
+void metal_fini_run(void) __attribute__((weak));
+void metal_fini_run(void) { metal_fini(); }
+80000774:	1141                	addi	sp,sp,-16
+80000776:	c606                	sw	ra,12(sp)
+80000778:	c422                	sw	s0,8(sp)
+8000077a:	0800                	addi	s0,sp,16
+8000077c:	3f95                	jal	800006f0 <metal_fini>
+8000077e:	0001                	nop
+80000780:	40b2                	lw	ra,12(sp)
+80000782:	4422                	lw	s0,8(sp)
+80000784:	0141                	addi	sp,sp,16
+80000786:	8082                	ret
+
+80000788 <_exit>:
+_exit():
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/sys_exit.c:3
+#include <metal/shutdown.h>
+
+void _exit(int exit_status) {
+80000788:	1101                	addi	sp,sp,-32
+8000078a:	ce06                	sw	ra,28(sp)
+8000078c:	cc22                	sw	s0,24(sp)
+8000078e:	1000                	addi	s0,sp,32
+80000790:	fea42623          	sw	a0,-20(s0)
+/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/sys_exit.c:4
+    metal_shutdown(exit_status);
+80000794:	fec42503          	lw	a0,-20(s0)
+80000798:	3945                	jal	80000448 <metal_shutdown>

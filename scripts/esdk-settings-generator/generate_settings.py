@@ -92,6 +92,9 @@ def arch2arch(arch):
         return "rv64i"
     if arch == "rv64ima":
         return "rv64im"
+    # Handle here until DTS correctly generating *_zfh
+    if arch == "rv64imafdcv":
+        return "rv64imafdcv_zfh"
 
     return arch
 
@@ -170,7 +173,9 @@ def get_series(boot_hart, bitness):
     """Given the boot hart and the bitness, get the SiFive core series name"""
     hart_compat = boot_hart.get_field("compatible")
     series = None
-    if "bullet" in hart_compat:
+    if "mallard" in hart_compat:
+        series = "sifive-8-series"
+    elif "bullet" in hart_compat:
         series = "sifive-7-series"
     elif "caboose" in hart_compat:
         series = "sifive-2-series"
@@ -196,6 +201,9 @@ def main(argv):
     codemodel = "medlow" if bitness == 32 else "medany"
 
     series = get_series(boot_hart, bitness)
+    intr_wait_cycle = 0
+    if series is not None:
+        intr_wait_cycle = 5000 if "8" in series else 0
 
     tags = type2tag(parsed_args.type)
 
@@ -219,8 +227,9 @@ RISCV_SERIES = %s
 TARGET_TAGS = %s
 TARGET_DHRY_ITERS = %d
 TARGET_CORE_ITERS = %d
-TARGET_FREERTOS_WAIT_MS = %d""" %  (arch, abi, codemodel, series, tags, dhry_iters, core_iters,
-                                    freertos_wait_ms)
+TARGET_FREERTOS_WAIT_MS = %d
+TARGET_INTR_WAIT_CYCLE  = %d""" %  (arch, abi, codemodel, series, tags, dhry_iters, core_iters,
+                                    freertos_wait_ms, intr_wait_cycle)
 
     port_width = get_port_width(tree)
     if port_width is not None:

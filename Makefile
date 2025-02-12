@@ -1,5 +1,6 @@
 PROGRAM = hello
-TARGET = freedom-e310-arty
+TARGET = design-rtl
+include freedom-e-sdk.mk
 
 # The configuration defaults to Debug. Valid choices are:
 #   - debug
@@ -20,11 +21,8 @@ export FREERTOS_SOURCE_PATH = $(abspath FreeRTOS-metal)
 export FREEDOM_E_SDK_VENV_PATH ?=  $(abspath .)/venv
 # Set FREERTOS_METAL_VENV_PATH to use same venv as FREEDOM_E_SDK_VENV_PATH
 export FREERTOS_METAL_VENV_PATH ?= $(FREEDOM_E_SDK_VENV_PATH)
-# SYSTEMVIEW_SOURCE_PATH sets the path to the SEGGER SystemView source directory
-export SYSTEMVIEW_SOURCE_PATH = $(abspath Segger_SystemView-metal)
 # SCL_SOURCE_PATH sets the path to the SCL source directory
 export SCL_SOURCE_PATH = $(abspath scl-metal)
-
 
 #############################################################
 # BSP loading
@@ -55,16 +53,19 @@ ifeq ($(RISCV_LIBC),)
 RISCV_LIBC=nano
 endif
 
+ifeq ($(RISCV_LIBC),segger)
+# Disable format string errors when building with -Werror
+RISCV_CFLAGS += -Wno-error=format=
+
+LIBMETAL_EXTRA=-lmetal-segger
+METAL_WITH_EXTRA=--with-builtin-libmetal-segger
+SPEC=gloss-segger
+endif
+
 ifeq ($(RISCV_LIBC),nano)
 LIBMETAL_EXTRA=-lmetal-gloss
 METAL_WITH_EXTRA=--with-builtin-libgloss
 SPEC=nano
-endif
-
-ifeq ($(RISCV_LIBC),picolibc)
-LIBMETAL_EXTRA=-lmetal-pico
-METAL_WITH_EXTRA=--with-builtin-libmetal-pico
-SPEC=picolibc
 endif
 
 ifeq ($(SPEC),)
@@ -161,8 +162,18 @@ RISCV_CFLAGS    += -march=$(RISCV_ARCH) -mabi=$(RISCV_ABI) -mcmodel=$(RISCV_CMOD
 RISCV_CXXFLAGS  += -march=$(RISCV_ARCH) -mabi=$(RISCV_ABI) -mcmodel=$(RISCV_CMODEL)
 RISCV_ASFLAGS   += -march=$(RISCV_ARCH) -mabi=$(RISCV_ABI) -mcmodel=$(RISCV_CMODEL)
 # Prune unused functions and data
+ifeq ($(RISCV_SERIES),sifive-8-series)
+ifeq ($(PROGRAM),dhrystone)
+RISCV_CFLAGS   += -fno-function-sections -fno-data-sections
+RISCV_CXXFLAGS += -fno-function-sections -fno-data-sections
+else
 RISCV_CFLAGS   += -ffunction-sections -fdata-sections
 RISCV_CXXFLAGS += -ffunction-sections -fdata-sections
+endif
+else
+RISCV_CFLAGS   += -ffunction-sections -fdata-sections
+RISCV_CXXFLAGS += -ffunction-sections -fdata-sections
+endif
 # Include the Metal headers
 RISCV_CCASFLAGS += -I$(abspath $(BSP_DIR)/install/include/)
 RISCV_CFLAGS    += -I$(abspath $(BSP_DIR)/install/include/)
@@ -195,7 +206,16 @@ $(error Unable to find the Makefile $(CONFIGURATION).mk for CONFIGURATION=$(CONF
 endif
 include $(CONFIGURATION).mk
 
+# Load the instantiation Makefile
+INSTANTIATION_FILE = $(wildcard $(SRC_DIR)/options.mk)
+ifneq ($(words $(INSTANTIATION_FILE)),0)
+include $(SRC_DIR)/options.mk
+endif
+
 # Benchmark CFLAGS go after loading the CONFIGURATION so that they can override the optimization level
+
+# Checking if we use gcc-10 or not, which need different compiler options for better benchmark scores
+GCC_VER_GTE10 := $(shell echo `${RISCV_GCC} -dumpversion | cut -f1-2 -d.` \>= 10 | bc )
 
 ifeq ($(PROGRAM),dhrystone)
 ifeq ($(DHRY_OPTION),)
@@ -212,17 +232,22 @@ RISCV_XCFLAGS += -DDHRY_ITERS=$(TARGET_DHRY_ITERS)
 endif
 
 ifeq ($(PROGRAM),coremark)
-ifeq ($(RISCV_SERIES),sifive-7-series)
-RISCV_XCFLAGS += -O2 -fno-common -funroll-loops -finline-functions -funroll-all-loops --param max-inline-insns-auto=20 -falign-functions=8 -falign-jumps=8 -falign-loops=8 --param inline-min-speedup=10 -mtune=sifive-7-series -ffast-math
+ifeq ($(RISCV_SERIES),$(filter $(RISCV_SERIES),sifive-7-series sifive-8-series))
+# 8-series currently uses 7-series mtune, but this may change
+RISCV_XCFLAGS += -O2 -fno-common -funroll-loops -finline-functions -funroll-all-loops -falign-functions=8 -falign-jumps=8 -falign-loops=8 -finline-limit=1000 -mtune=sifive-7-series -ffast-math
 else
 ifeq ($(RISCV_XLEN),32)
 RISCV_XCFLAGS += -O2 -fno-common -funroll-loops -finline-functions -falign-functions=16 -falign-jumps=4 -falign-loops=4 -finline-limit=1000 -fno-if-conversion2 -fselective-scheduling -fno-tree-dominator-opts -fno-reg-struct-return -fno-rename-registers --param case-values-threshold=8 -fno-crossjumping -freorder-blocks-and-partition -fno-tree-loop-if-convert -fno-tree-sink -fgcse-sm -fno-strict-overflow
 else
 RISCV_XCFLAGS += -O2 -fno-common -funroll-loops -finline-functions -falign-functions=16 -falign-jumps=4 -falign-loops=4 -finline-limit=1000 -fno-if-conversion2 -fselective-scheduling -fno-tree-dominator-opts
-endif
-endif
+endif # RISCV_XLEN==32
+endif # RISCV_SERIES==sifive-7-series|sifive-8-series
 RISCV_XCFLAGS += -DITERATIONS=$(TARGET_CORE_ITERS)
-endif
+ifeq ($(GCC_VER_GTE10),1)
+# additional options for gcc-10 to get better performance
+RISCV_XCFLAGS += -fno-tree-loop-distribute-patterns --param fsm-scale-path-stmts=3
+endif # GCC_VER_GTE10==1
+endif # PROGRAM==coremark
 
 ifeq ($(findstring freertos,$(PROGRAM)),freertos)
 RISCV_XCFLAGS += -DWAIT_MS=$(TARGET_FREERTOS_WAIT_MS)
@@ -231,6 +256,9 @@ endif
 ifneq ($(filter rtl,$(TARGET_TAGS)),)
 RISCV_XCFLAGS += -DHCA_BYPASS_TRNG
 endif
+
+# A method to pass cycle delay
+RISCV_XCFLAGS += -DMETAL_WAIT_CYCLE=$(TARGET_INTR_WAIT_CYCLE)
 
 #############################################################
 # Software
@@ -253,8 +281,8 @@ PROGRAM_SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*.h) $(wildcard 
 $(PROGRAM_ELF): \
 		$(PROGRAM_SRCS) \
 		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libmetal.a \
-		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libmetal-pico.a \
 		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libmetal-gloss.a \
+		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libxprop.a \
 		$(BSP_DIR)/metal.$(LINK_TARGET).lds
 	mkdir -p $(dir $@)
 	$(MAKE) -C $(SRC_DIR) $(basename $(notdir $@)) \
@@ -290,6 +318,54 @@ $(PROGRAM_HEX): \
 	$(RISCV_OBJCOPY) -O ihex $(PROGRAM_ELF) $@
 endif
 
+# ----------------------------------------------------------------------
+# Update RISCV_LDLIBS if XPROP
+# ----------------------------------------------------------------------
+ifeq ($(XPROP),on)
+XPROP_PYTHON = on
+else 
+ifeq ($(XPROP),manual)
+XPROP_PYTHON = manual
+override XPROP = on
+endif
+endif
+ifeq ($(XPROP),on)
+XPROP_SOURCE_PATH = $(abspath xprop)
+
+XPROP_BUILD_DIR=$(abspath $(BSP_DIR)/build/$(CONFIGURATION))
+XPROP_VENV_PATH=$(abspath .)/venv_xprop
+
+$(BSP_DIR)/install/lib/$(CONFIGURATION)/libxprop.a: \
+		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libmetal.a \
+		$(BSP_DIR)/install/lib/$(CONFIGURATION)/libmetal-gloss.a
+	$(MAKE) -f Makefile -C $(XPROP_SOURCE_PATH) $(BSP_DIR)/install/lib/$(CONFIGURATION)/libxprop.a \
+		VERBOSE=$(VERBOSE) \
+		AR=$(RISCV_AR) \
+		CC=$(RISCV_GCC) \
+		CXX=$(RISCV_GXX) \
+		ASFLAGS="$(RISCV_ASFLAGS)" \
+		CCASFLAGS="$(RISCV_CCASFLAGS)" \
+		CFLAGS="$(RISCV_CFLAGS)" \
+		CXXFLAGS="$(RISCV_CXXFLAGS)" \
+		XCFLAGS="$(RISCV_XCFLAGS)"  \
+		BSP_DIR="$(BSP_DIR)" \
+		SRC_DIR="$(SRC_DIR)" \
+		TARGET_DTS="$(BSP_DIR)/core.dts" \
+		XPROP_VENV_PATH="$(XPROP_VENV_PATH)" \
+		XPROP_PYTHON="$(XPROP_PYTHON)" \
+		BUILD_DIR="$(BSP_DIR)/build/$(CONFIGURATION)/xprop" \
+		LIB_DIR="$(BSP_DIR)/install/lib/$(CONFIGURATION)"
+
+FILTER_PATTERN = -Wl,--end-group
+override RISCV_LDLIBS := $(filter-out $(FILTER_PATTERN),$(RISCV_LDLIBS)) -lxprop -Wl,--end-group
+override RISCV_LDFLAGS += -Wl,--wrap=_enter -Wl,--wrap=metal_init_run -Wl,--entry=__wrap__enter -L $(SRC_DIR)/xprop/lib
+
+else
+
+$(BSP_DIR)/install/lib/$(CONFIGURATION)/libxprop.a:
+	@:
+
+endif
 
 .PHONY: clean-software
 clean-software:
@@ -318,6 +394,17 @@ clean-elf2hex:
 	rm -rf scripts/elf2hex/build scripts/elf2hex/install
 clean: clean-elf2hex
 
+#############################################################
+# Freedom Studio
+#############################################################
+.PHONY: list-standalone-info
+list-standalone-info:
+	@echo e-sdk-tags: $(E_SDK_TAGS)
+	@echo e-sdk-reqs: $(E_SDK_REQS)
+	@echo riscv-arch: $(RISCV_ARCH)
+	@echo target-tags: $(TARGET_TAGS)
+	@echo riscv-reqs: $(RISCV_REQS)
+	@echo program-tags: $(PROGRAM_TAGS)
 
 #############################################################
 # Compiles an instance of Metal targeted at $(TARGET)

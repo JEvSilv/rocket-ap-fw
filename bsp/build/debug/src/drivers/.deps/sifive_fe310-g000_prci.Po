@@ -1,5 +1,5 @@
 src/drivers/sifive_fe310-g000_prci.o: \
- /home/jonathas/wsFreedomStudio/rocket-ap-fw/freedom-metal/src/drivers/sifive_fe310-g000_prci.c \
+ /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_fe310-g000_prci.c \
  metal/machine/platform.h
 
 metal/machine/platform.h:

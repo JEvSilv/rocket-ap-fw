@@ -7,6 +7,9 @@
 {% if itim.lma is undefined or itim.vma is undefined %}
     {{ missingvalue("Cannot render linker script, itimable regions don't specify lma/vma!") }}
 {% endif %}
+{% if lim.lma is undefined or lim.vma is undefined %}
+    {{ missingvalue("Cannot render linker script, limable regions don't specify lma/vma!") }}
+{% endif %}
 {% if ram.lma is undefined or ram.vma is undefined %}
     {{ missingvalue("Cannot render linker script, ramable regions don't specify lma/vma!") }}
 {% endif %}
@@ -36,6 +39,7 @@ PHDRS
     ram PT_LOAD;
     itim_init PT_LOAD;
     text PT_LOAD;
+    lim_init PT_LOAD;
 }
 
 SECTIONS
@@ -83,6 +87,7 @@ SECTIONS
      * certain core features */
     PROVIDE(__metal_chicken_bit = {{ chicken_bit|default(0) }});
 
+{% if eccscrub_en %}
     /* The memory_ecc_scrub bit is used by _entry code to enable/disable
      * memories scrubbing to zero  */
     PROVIDE(__metal_eccscrub_bit = {{ eccscrub_bit|default(0) }});
@@ -96,6 +101,9 @@ SECTIONS
     PROVIDE( metal_{{ memory.name }}_memory_start = {{ memory.base_hex }} );
     PROVIDE( metal_{{ memory.name }}_memory_end = {{ memory.base_hex }} + {{ memory.length_hex }} );
 {% endfor %}
+{% else %}
+    PROVIDE(__metal_eccscrub_bit = 0);
+{% endif %}
 
     /* ROM SECTION
      *
@@ -107,6 +115,7 @@ SECTIONS
     .init : {
         /* The _enter symbol is placed in the .text.metal.init.enter section
          * and must be placed at the beginning of the program */
+        KEEP (*(.text.metal.init.enter.xprop))
         KEEP (*(.text.metal.init.enter))
         KEEP (*(.text.metal.init.*))
         KEEP (*(SORT_NONE(.init)))
@@ -149,6 +158,7 @@ SECTIONS
 
     .ctors : {
         {% if privilege_en %}
+        . = ALIGN(32);
         __unprivileged_section_start__ = .;
         {% endif %}
         KEEP (*crtbegin.o(.ctors))
@@ -182,10 +192,6 @@ SECTIONS
         *(.srodata.cst4)
         *(.srodata.cst2)
         *(.srodata .srodata.*)
-        {% if privilege_en %}
-        __unprivileged_section_end__ = .;
-        {% endif %}
-
     } >{{ rom.vma }} :rom
 {% endif %}
 
@@ -209,10 +215,30 @@ SECTIONS
     PROVIDE( metal_segment_itim_target_start = ADDR(.itim) );
     PROVIDE( metal_segment_itim_target_end = ADDR(.itim) + SIZEOF(.itim) );
 
+    /* LIM SECTION
+     *
+     * The following sections contain data which is copied from read-only
+     * memory into a loosely integrated memory (LIM), which is shared with L2
+     * cache, during pre-main program initialization.
+     *
+     * Generally, the data copied into the LIM should be performance-critical
+     * functions which benefit from low instruction-fetch latency.
+     */
+
+    .lim : ALIGN(8) {
+        *(.lim .lim.*)
+{% block force_lim %}
+{% endblock %}
+    } >{{ lim.vma }} AT>{{ lim.lma }} :lim_init
+
+    PROVIDE( metal_segment_lim_source_start = LOADADDR(.lim) );
+    PROVIDE( metal_segment_lim_target_start = ADDR(.lim) );
+    PROVIDE( metal_segment_lim_target_end = ADDR(.lim) + SIZEOF(.lim) );
+
     /* TEXT SECTION
      *
      * The following section contains the code of the program, excluding
-     * everything that's been allocated into the ITIM already
+     * everything that's been allocated into the ITIM/LIM already
      */
 
     .text : {
@@ -220,7 +246,9 @@ SECTIONS
         *(.text.startup .text.startup.*)
         *(.text .text.*)
         *(.gnu.linkonce.t.*)
-        {% if ramrodata and privilege_en %}
+        {% if privilege_en %}
+        *(freertos_system_calls)
+        . = ALIGN(32);
         __unprivileged_section_end__ = .;
         {% endif %}
     } >{{ rom.vma }} :text
@@ -240,6 +268,7 @@ SECTIONS
 
     .data : ALIGN(8) {
         {% if privilege_en %}
+        . = ALIGN(32);
         __unprivileged_data_section_start__ = .;
         {% endif %}
         *(.data .data.*)
@@ -295,6 +324,7 @@ SECTIONS
         *(.gnu.linkonce.b.*)
         *(COMMON)
 {% if privilege_en %}
+        . = ALIGN(32);
         __unprivileged_data_section_end__ = .;
 {% endif %}
     } >{{ ram.vma }} :ram
@@ -315,7 +345,7 @@ SECTIONS
         PROVIDE(metal_segment_stack_end = .);
     } >{{ ram.vma }} :ram
 
-    .heap (NOLOAD) : ALIGN(4) {
+    .heap (NOLOAD) : ALIGN(8) {
         PROVIDE( __end = . );
         PROVIDE( __heap_start = . );
         PROVIDE( metal_segment_heap_target_start = . );
