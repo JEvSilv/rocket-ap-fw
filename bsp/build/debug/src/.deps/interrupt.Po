@@ -1,109 +1,109 @@
 src/interrupt.o: \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/interrupt.c \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/interrupt.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/interrupt.c \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/interrupt.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h \
  metal/machine.h metal/machine/platform.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/fixed-clock.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/clock.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/compiler.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/memory.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/riscv_cpu.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/cpu.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/pmp.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_clic0.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_test0.h \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/string.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/newlib-nano/newlib.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/config.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/ieeefp.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/reent.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_types.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_types.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/lock.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/cdefs.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_locale.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/strings.h \
- /home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/string.h
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/fixed-clock.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/clock.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/compiler.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/memory.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/riscv_cpu.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/cpu.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/pmp.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_clic0.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_test0.h \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/string.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/newlib-nano/newlib.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/config.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/ieeefp.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/reent.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_types.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_types.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/lock.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/cdefs.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_locale.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/strings.h \
+ /home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/string.h
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/interrupt.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/interrupt.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:
 
 metal/machine.h:
 
 metal/machine/platform.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/fixed-clock.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/fixed-clock.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/clock.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/clock.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/compiler.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/compiler.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/memory.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/memory.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/lib/gcc/riscv64-unknown-elf/8.3.0/include/stdint.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/stdint.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_default_types.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/features.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_newlib_version.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_intsup.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_stdint.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/riscv_cpu.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/riscv_cpu.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/cpu.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/cpu.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/pmp.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/pmp.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_clic0.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_clic0.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_local-external-interrupts0.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_test0.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/drivers/sifive_test0.h:
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/string.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/string.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/newlib-nano/newlib.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/newlib-nano/newlib.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/config.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/config.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/ieeefp.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/ieeefp.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/reent.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/reent.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/_ansi.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_types.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_types.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_types.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/machine/_types.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/lock.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/lock.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/cdefs.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/cdefs.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_locale.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/_locale.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/strings.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/strings.h:
 
-/home/jonathas/Downloads/FreedomStudio-2020-06-3-lin64/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/string.h:
+/home/jonathas/FreedomStudio/SiFive/riscv64-unknown-elf-gcc-8.3.0-2020.04.1/riscv64-unknown-elf/include/sys/string.h:

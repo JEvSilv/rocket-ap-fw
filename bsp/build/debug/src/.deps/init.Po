@@ -1,5 +1,5 @@
 src/init.o: \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/init.h
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/init.c \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/init.h
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/init.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/init.h:

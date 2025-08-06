@@ -11,7 +11,7 @@
 
 
 /* Defines */
-#define AP_COL_SIZE 128
+#define AP_COL_SIZE 64
 #define COL_QUANT 6
 #define AP_BASE_ADDR 0x80004000
 
@@ -39,6 +39,10 @@
 #define AP_MODE ((volatile uint32_t *)AP_MODE_CONFIGURATION_ADDR)
 #define AP_IRQ ((volatile uint32_t *)AP_IRQ_ADDR)
 
+#define AP_CAM_A ((volatile uint8_t *)CAM_A_0_BASE_ADDR)
+#define AP_CAM_B ((volatile uint8_t *)CAM_B_0_BASE_ADDR)
+#define AP_CAM_C ((volatile uint8_t *)CAM_C_0_BASE_ADDR)
+
 /* Logical operations */
 /* Support for 8 bits */
 /* Arithmetic operations */
@@ -52,7 +56,8 @@ typedef enum {
   NOT = 3,
   ADD = 4,
   SUB = 5,
-  MULT = 6
+  MULT = 6,
+  SET = 7
 } APOperations;
 
 typedef enum {
@@ -74,15 +79,17 @@ typedef enum { DYNAMIC = 0, STATIC = 1 } APIfState;
 
 typedef enum { TRUE = 1, FALSE = 0 } BitState;
 
+typedef enum { TARGET_C = 0, TARGET_A = 1 } OpTarget;
+
 /* Macro functions */
-#define set_mode_reg(sel_internal_col, col, op_direction, cmd)              \
+#define set_mode_reg(sel_internal_col, sel_col, op_direction, cmd)              \
   {                                                                    \
-    *AP_MODE = (sel_internal_col << 24) | (col << 16) | (op_direction << 8) | (cmd); \
+    *AP_MODE = (sel_internal_col << 24) | (sel_col << 16) | (op_direction << 8) | (cmd); \
   }
 
-#define set_control_reg(ap_if_state, ap_trigger_ap, ap_rst)              \
+#define set_control_reg(ap_if_state, ap_op_target, ap_trigger_ap, ap_rst)              \
   {                                                                      \
-    *AP_CONTROL = (ap_if_state << 16) | (ap_trigger_ap << 8) | (ap_rst); \
+    *AP_CONTROL = (ap_if_state << 24) | (ap_op_target << 16) | (ap_trigger_ap << 8) | (ap_rst); \
   }
 
 /* Prototypes */
@@ -96,7 +103,7 @@ void tiny_delay(uint32_t delay_in_nops);
 void warmup_ap();
 #pragma GCC pop_options
 
-void flush_col_ap();
+void flush_col_ap(APCollunm col, APInternalCollunm internal_col);
 
 // R/W functions
 void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
@@ -108,7 +115,17 @@ void ap_read_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
 void ap_read_result_vector(APInternalCollunm internal_col, uint8_t *V,
                            size_t size);
 
+void ap_set_value(APCollunm col, APInternalCollunm internal_col, uint8_t value);
+
+// Assembly
+extern void ap_store_data(unsigned int addr, uint8_t data);
+extern unsigned char ap_get_data(unsigned int addr);
+extern void ap_get_data_to(unsigned int dest, unsigned int src);
+
 // AP computing
+void ap_trigger_computing_w_wait(APOperations op, APOpDirection op_direction, APInternalCollunm internal_col);
+
+
 void ap_computing(APOperations op, APInternalCollunm internal_col,
                   APOpDirection op_direction, uint8_t *A, uint8_t *B,
                   size_t size);
@@ -116,7 +133,13 @@ void ap_computing(APOperations op, APInternalCollunm internal_col,
 void ap_vertical_computing(APOperations op, APCollunm col, APInternalCollunm internal_col,
                uint8_t *V, size_t size);
 
+void ap_trigger_computing(APOperations op, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target);
+
+void ap_trigger_vertical_computing_w_wait(APOperations op, APCollunm col, APInternalCollunm internal_col);
+
 void release_ap_if();
+
+BitState waiting_for_ap_computing(uint32_t loops);
 
 // AP IRQ check
 volatile uint8_t ap_irq_check();

@@ -1,5 +1,5 @@
 gloss/sys_exit.o: \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/sys_exit.c \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/gloss/sys_exit.c \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h
 
-/home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:
+/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/metal/shutdown.h:

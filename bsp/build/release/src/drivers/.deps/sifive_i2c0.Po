@@ -1,5 +1,5 @@
 src/drivers/sifive_i2c0.o: \
- /home/jonathas/wsFreedomStudio2/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_i2c0.c \
+ /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/sifive_i2c0.c \
  metal/machine/platform.h
 
 metal/machine/platform.h:

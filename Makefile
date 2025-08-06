@@ -306,17 +306,17 @@ $(PROGRAM_ELF): \
 	$(RISCV_SIZE) $@
 
 # Use elf2hex if we're creating a hex file for RTL simulation
-ifneq ($(filter rtl,$(TARGET_TAGS)),)
-.PHONY: software
-$(PROGRAM_HEX): \
-		scripts/elf2hex/install/bin/$(CROSS_COMPILE)-elf2hex \
-		$(PROGRAM_ELF)
-	$< --output $@ --input $(PROGRAM_ELF) --bit-width $(COREIP_MEM_WIDTH)
-else
+#ifneq ($(filter rtl,$(TARGET_TAGS)),)
+#.PHONY: software
+#$(PROGRAM_HEX): \
+#		scripts/elf2hex/install/bin/$(CROSS_COMPILE)-elf2hex \
+#		$(PROGRAM_ELF)
+#	$< --output $@ --input $(PROGRAM_ELF) --bit-width $(COREIP_MEM_WIDTH)
+#else
 $(PROGRAM_HEX): \
 		$(PROGRAM_ELF)
 	$(RISCV_OBJCOPY) -O ihex $(PROGRAM_ELF) $@
-endif
+#endif
 
 # ----------------------------------------------------------------------
 # Update RISCV_LDLIBS if XPROP

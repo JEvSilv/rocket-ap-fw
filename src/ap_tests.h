@@ -11,10 +11,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "util.h"
+#include "env_tests.h"
 #include "ap_hal.h"
 
-int ap_computing_vertical_test(APOperations op,
-		APInternalCollunm internal_col, uint8_t seed) {
+int ap_computing_vertical_test(APOperations op, APInternalCollunm internal_col,
+		uint8_t seed) {
 	uint8_t *A = (uint8_t*) malloc(AP_COL_SIZE);
 	uint8_t *B = (uint8_t*) malloc(AP_COL_SIZE);
 	uint8_t *C = (uint8_t*) malloc(AP_COL_SIZE);
@@ -25,7 +26,8 @@ int ap_computing_vertical_test(APOperations op,
 
 	ap_vertical_computing(op, CAM_B, internal_col, A, 10);
 
-	while (ap_irq_check() == 0) {}
+	while (ap_irq_check() == 0) {
+	}
 
 	*AP_CONTROL = 0x0;
 
@@ -40,9 +42,9 @@ int ap_computing_vertical_test(APOperations op,
 
 int ap_computing_horizontal_test(APOperations op,
 		APInternalCollunm internal_col, uint8_t seed) {
-	uint8_t *A = (uint8_t*) malloc(AP_COL_SIZE);
-	uint8_t *B = (uint8_t*) malloc(AP_COL_SIZE);
-	uint8_t *C = (uint8_t*) malloc(AP_COL_SIZE);
+	volatile uint8_t *A = (volatile uint8_t*) malloc(AP_COL_SIZE);
+	volatile uint8_t *B = (volatile uint8_t*) malloc(AP_COL_SIZE);
+	volatile uint8_t *C = (volatile uint8_t*) malloc(AP_COL_SIZE);
 	volatile uint64_t cycle_count;
 	unsigned long long start = 0, end = 0;
 
@@ -59,7 +61,8 @@ int ap_computing_horizontal_test(APOperations op,
 
 	ap_computing(op, internal_col, HORIZONTAL, A, B, AP_COL_SIZE);
 	start_compute_cycles();
-	while (ap_irq_check() == 0) {}
+	while (ap_irq_check() == 0) {
+	}
 	end_compute_cycles();
 //	metal_timer_get_cyclecount(0, &end);
 //	cycle_count = end - start;
@@ -88,8 +91,6 @@ int ap_computing_horizontal_test(APOperations op,
 
 	return 1;
 }
-
-
 
 void pointer_ap_rw_test() {
 	uint32_t addr = 0x80004000;
@@ -193,5 +194,289 @@ void api_r_w_ap_test() {
 
 	return;
 }
+
+void asm_memory_fun_tests() {
+	ap_store_data(CAM_B_0_BASE_ADDR, 10);
+	volatile uint8_t *dtim = (volatile uint8_t*) 0x80000000;
+	*dtim = 0xf;
+	ap_get_data_to(0x80000000, CAM_B_0_BASE_ADDR);
+	volatile int x = 10;
+}
+
+void functional_test() {
+	uint8_t *a = (volatile uint8_t*) malloc(5);
+	uint8_t *b = (volatile uint8_t*) malloc(5);
+
+	a[0] = 1;
+	a[1] = 2;
+	a[2] = 3;
+	a[3] = 4;
+	a[4] = 5;
+	b[0] = 5;
+	b[1] = 4;
+	b[2] = 3;
+	b[3] = 2;
+	b[4] = 1;
+
+	volatile uint8_t c[5] = { 0, 0, 0, 0, 0 };
+	volatile uint8_t *cam_a = (volatile uint8_t*) CAM_A_0_BASE_ADDR;
+
+	for (int i = 0; i < 5; i++) {
+		cam_a[i] = a[i];
+	}
+
+	volatile uint8_t *cam_b = (volatile uint8_t*) CAM_B_0_BASE_ADDR;
+
+	for (int i = 0; i < 5; i++) {
+		cam_b[i] = b[i];
+	}
+
+	// Block interface
+	*AP_CONTROL = 0x10000;
+
+	// Setting internal collumn
+	set_mode_reg(0, 0, 0, XOR);
+
+	// Trigger ap computation
+	*AP_CONTROL = 0x10000 | (1 << 8);
+
+	// Wait to finish AP computation
+	while (ap_irq_check() == 0) {
+	}
+
+	// Release block interface
+	*AP_CONTROL = 0x0;
+
+	// [TODO]: Avoid set mode reg by changing the cols automatically
+	volatile uint8_t *cam_c = (volatile uint8_t*) CAM_C_0_BASE_ADDR;
+	set_mode_reg(0, CAM_C, 0, 0);
+
+	for (int i = 0; i < 5; i++) {
+		c[i] = cam_c[i];
+		tiny_delay(1);
+		save_result(c[i]);
+	}
+}
+
+void vector_ap_op_kernel_horizontal(APOperations op, uint8_t *A, uint8_t *B,
+		uint8_t *C, uint32_t size) {
+	int slices = (size / AP_COL_SIZE) + 1;
+	// int slices = 1;
+
+	for (int i = 0; i < slices; i++) {
+		int start_index = AP_COL_SIZE * i;
+		int chunk_size =
+				(size < start_index + AP_COL_SIZE) ?
+						size % AP_COL_SIZE : AP_COL_SIZE;
+
+		ap_write_vector(CAM_A, LEFT, &A[start_index], chunk_size);
+		ap_write_vector(CAM_B, LEFT, &B[start_index], chunk_size);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_read_vector(CAM_C, LEFT, C, chunk_size);
+	}
+}
+
+void fill_a_col(uint8_t factor, int size) {
+	volatile uint8_t *cam_a = (volatile uint8_t*) CAM_A_0_BASE_ADDR;
+
+	for (int i = 0; i < size; i++) {
+		cam_a[i] = i;
+	}
+}
+
+void fill_a_b_cols(uint8_t *A, uint8_t *B, int size) {
+	volatile uint8_t *cam_a = (volatile uint8_t*) CAM_A_0_BASE_ADDR;
+	volatile uint8_t *cam_b = (volatile uint8_t*) CAM_B_0_BASE_ADDR;
+
+	for (int i = 0; i < size; i++) {
+		cam_a[i] = A[i];
+	}
+
+	for (int i = 0; i < size; i++) {
+		cam_b[i] = B[i];
+	}
+}
+
+void offload(int size) {
+	volatile uint8_t *data = (uint8_t*) 0x80000100;
+	volatile uint8_t *cam_c = (volatile uint8_t*) CAM_C_0_BASE_ADDR;
+
+	set_mode_reg(LEFT, CAM_C, 0, 0);
+
+	for (int i = 0; i < size; i++) {
+		data[i] = cam_c[i];
+	}
+}
+
+void ap_monitor_breakpoint() {
+	//	Lines of code to check the AP internal state
+	set_mode_reg(LEFT, CAM_A, 0, 0);
+	set_mode_reg(RIGHT, CAM_A, 0, 0);
+	set_mode_reg(LEFT, CAM_B, 0, 0);
+	set_mode_reg(RIGHT, CAM_B, 0, 0);
+	set_mode_reg(LEFT, CAM_C, 0, 0);
+	set_mode_reg(RIGHT, CAM_C, 0, 0);
+	offload(10);
+}
+
+void accum() {
+	fill_a_col(1, 10);
+	ap_trigger_vertical_computing_w_wait(ADD, CAM_A, LEFT);
+	ap_monitor_breakpoint();
+}
+
+//Problema no gerador de vetores randomicos
+void vector_ap_op_horizontal(APOperations op, int size, int seed) {
+	fill_random_vectors(op, size);
+	uint8_t *A = r_v_mgmt.A;
+	uint8_t *B = r_v_mgmt.B;
+
+	if (size <= AP_COL_SIZE) {
+		fill_a_b_cols(A, B, size);
+		start_compute_cycles();
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		end_compute_cycles();
+	}
+
+	if (size > AP_COL_SIZE && size <= AP_COL_SIZE * 2) {
+		fill_a_b_cols(A, B, size);
+		start_compute_cycles();
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		end_compute_cycles();
+	}
+
+	if (size == 2048) {
+		fill_a_b_cols(A, B, 1024);
+		start_compute_cycles();
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		offload(1024);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		end_compute_cycles();
+	}
+
+	if (size == 4096) {
+		fill_a_b_cols(A, B, 1024);
+		start_compute_cycles();
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		offload(1024);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		offload(1024);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		offload(1024);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait(op, HORIZONTAL, RIGHT);
+		end_compute_cycles();
+	}
+
+	ap_monitor_breakpoint();
+
+	warmup_ap();
+}
+
+void test_offload(int size) {
+	set_mode_reg(0, CAM_C, 0, 0);
+	volatile uint8_t *cam_c = (volatile uint8_t*) CAM_C_0_BASE_ADDR;
+	uint8_t *data = (uint8_t*) 0x80000300;
+	uint8_t *v = (uint8_t*) malloc(size);
+
+	start_compute_cycles();
+	for (int i = 0; i < size; i++) {
+		cam_c[i] = i;
+	}
+	end_compute_cycles();
+
+	start_compute_cycles();
+	for (int i = 0; i < size; i++) {
+		data[i] = cam_c[i];
+	}
+	end_compute_cycles();
+
+	start_compute_cycles();
+	for (int i = 0; i < size; i++) {
+		v[i] = cam_c[i];
+	}
+	end_compute_cycles();
+
+	volatile int i = 10;
+
+	return;
+}
+
+void accum_data_manipulation(int size) {
+	int half = size / 2;
+	unsigned int src_half = CAM_C_0_BASE_ADDR + half;
+	unsigned int src = CAM_C_0_BASE_ADDR;
+
+	for(int i = 0; i < half; i++) {
+		ap_get_data_to(CAM_A_0_BASE_ADDR + i, src + i);
+		ap_get_data_to(CAM_B_0_BASE_ADDR + i, src_half + i);
+	}
+}
+
+void accumulate_horizontal() {
+	for (int i = 0; i < 512; i++) {
+		ap_store_data(CAM_A_0_BASE_ADDR + i, 1);
+		ap_store_data(CAM_B_0_BASE_ADDR + i, 1);
+	}
+
+	ap_monitor_breakpoint();
+
+	start_compute_cycles();
+	for (volatile int i = 512; i > 0; i = i / 2) {
+		ap_trigger_computing_w_wait(ADD, HORIZONTAL, LEFT);
+		ap_monitor_breakpoint();
+		// reset ou zerar a coluna C
+		accum_data_manipulation(i);
+	}
+	end_compute_cycles();
+}
+
+void accumulate_vertical() {
+
+}
+
+// Tests
+// Test vector AP op
+void test_vector_ap_op_horizontal() {
+	const int sizes[8] = { 32, 64, 128, 256, 512, 1024, 2048, 4096 };
+	APOperations op = NOT;
+	vector_ap_op_horizontal(op, sizes[0], 14);
+	vector_ap_op_horizontal(op, sizes[1], 14);
+	vector_ap_op_horizontal(op, sizes[2], 14);
+	vector_ap_op_horizontal(op, sizes[3], 14);
+	vector_ap_op_horizontal(op, sizes[4], 14);
+	vector_ap_op_horizontal(op, sizes[5], 14);
+	vector_ap_op_horizontal(op, sizes[6], 14);
+	vector_ap_op_horizontal(op, sizes[7], 14);
+}
+
+void ap_saxpy(int n, uint8_t a, uint8_t *x, uint8_t *y) {
+	ap_set_value(CAM_B, LEFT, a);
+	ap_write_vector(CAM_A, LEFT, x, n);
+	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
+	flush_col_ap(CAM_A, LEFT);
+	ap_write_vector(CAM_B, LEFT, y, n);
+	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+}
+
+// Maybe put some starting point
+void ap_index(int n, uint8_t a, uint8_t *x, uint8_t *y) {
+	for(int i = 0; i < n; i++) {
+		AP_CAM_A[i] = i;
+	}
+	ap_write_vector(CAM_A, LEFT, x, n);
+	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
+	flush_col_ap(CAM_A, LEFT);
+	ap_write_vector(CAM_B, LEFT, y, n);
+	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+}
+
+
 
 #endif /* AP_TESTS_H_ */
