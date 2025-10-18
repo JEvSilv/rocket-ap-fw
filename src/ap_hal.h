@@ -40,8 +40,11 @@
 #define AP_IRQ ((volatile uint32_t *)AP_IRQ_ADDR)
 
 #define AP_CAM_A ((volatile uint8_t *)CAM_A_0_BASE_ADDR)
+#define AP_CAM_A_1 ((volatile uint8_t *)CAM_A_1_BASE_ADDR)
 #define AP_CAM_B ((volatile uint8_t *)CAM_B_0_BASE_ADDR)
-#define AP_CAM_C ((volatile uint8_t *)CAM_C_0_BASE_ADDR)
+#define AP_CAM_B_1 ((volatile uint8_t *)CAM_B_1_BASE_ADDR)
+#define AP_CAM_C ((volatile uint8_t *) CAM_C_0_BASE_ADDR)
+#define AP_CAM_C_1 ((volatile uint8_t *)CAM_C_1_BASE_ADDR)
 
 /* Logical operations */
 /* Support for 8 bits */
@@ -57,7 +60,8 @@ typedef enum {
   ADD = 4,
   SUB = 5,
   MULT = 6,
-  SET = 7
+  SET = 7,
+  SEARCH = 8
 } APOperations;
 
 typedef enum {
@@ -103,7 +107,9 @@ void tiny_delay(uint32_t delay_in_nops);
 void warmup_ap();
 #pragma GCC pop_options
 
-void flush_col_ap(APCollunm col, APInternalCollunm internal_col);
+void ap_search(uint8_t key, APInternalCollunm internal_col, OpTarget target);
+
+void ap_flush_col(APCollunm col, APInternalCollunm internal_col);
 
 // R/W functions
 void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
@@ -133,13 +139,13 @@ void ap_computing(APOperations op, APInternalCollunm internal_col,
 void ap_vertical_computing(APOperations op, APCollunm col, APInternalCollunm internal_col,
                uint8_t *V, size_t size);
 
-void ap_trigger_computing(APOperations op, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target);
-
+//void ap_trigger_computing(APOperations op, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target);
+void ap_trigger_computing(APOperations op, APCollunm col, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target);
 void ap_trigger_vertical_computing_w_wait(APOperations op, APCollunm col, APInternalCollunm internal_col);
 
 void release_ap_if();
 
-BitState waiting_for_ap_computing(uint32_t loops);
+BitState ap_waiting_for_computing(uint32_t loops);
 
 // AP IRQ check
 volatile uint8_t ap_irq_check();

@@ -456,27 +456,77 @@ void test_vector_ap_op_horizontal() {
 	vector_ap_op_horizontal(op, sizes[7], 14);
 }
 
-void ap_saxpy(int n, uint8_t a, uint8_t *x, uint8_t *y) {
-	ap_set_value(CAM_B, LEFT, a);
-	ap_write_vector(CAM_A, LEFT, x, n);
-	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
-	flush_col_ap(CAM_A, LEFT);
-	ap_write_vector(CAM_B, LEFT, y, n);
-	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+//void ap_saxpy(int n, uint8_t a, uint8_t *x, uint8_t *y) {
+//	ap_set_value(CAM_B, LEFT, a);
+//	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
+//	ap_flush_col(CAM_A, LEFT);
+//	for (int i = 0; i < n; i++) {
+//		AP_CAM_B[i] = y[i];
+//	}
+//	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+//}
+//
+//// Maybe put some starting point
+//void ap_index(uint8_t *a, uint8_t *b, uint8_t *c, int n) {
+//	for(int i = 0; i < n; i++) {
+//		AP_CAM_A[i] = c[i];
+//		AP_CAM_B[i] = i%15;
+//	}
+//	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
+//	// ap_flush_col(CAM_B, LEFT);
+//	for(int i = 0; i < n; i++) {
+//		AP_CAM_B[i] = b[i];
+//	}
+//	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+//}
+
+void ap_accum() {
+	for(int i = 0; i < 10; i++) {
+//		AP_CAM_A[i] = 1;
+//		tiny_delay(1);
+		AP_CAM_B[i] = 1;
+		tiny_delay(1);
+		AP_CAM_C[i] = 1;
+	}
+
+	ap_trigger_computing(ADD, CAM_A, LEFT, HORIZONTAL, TARGET_C);
+	ap_trigger_computing(ADD, CAM_A, LEFT, HORIZONTAL, TARGET_C);
+	ap_trigger_computing(ADD, CAM_A, LEFT, HORIZONTAL, TARGET_C);
+
 }
 
 // Maybe put some starting point
-void ap_index(int n, uint8_t a, uint8_t *x, uint8_t *y) {
+void ap_reduce(uint8_t *a, uint8_t *b, uint8_t *result_sum,
+		uint8_t *result_count, int n) {
+	ap_flush_col(CAM_C, LEFT);
 	for(int i = 0; i < n; i++) {
-		AP_CAM_A[i] = i;
+		AP_CAM_A[i] = a[i];
 	}
-	ap_write_vector(CAM_A, LEFT, x, n);
-	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
-	flush_col_ap(CAM_A, LEFT);
-	ap_write_vector(CAM_B, LEFT, y, n);
-	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
+	ap_search(3, LEFT, TARGET_C);
+	ap_flush_col(CAM_A, LEFT);
+	ap_search(0, LEFT, TARGET_C);
+	ap_flush_col(CAM_C, LEFT);
+	for(int i = 0; i < n; i++) {
+		AP_CAM_B[i] = a[i];
+	}
 }
 
-
+void ap_search_test() {
+	for(int i = 0; i < 10; i++) {
+		AP_CAM_A[i] = i;
+	}
+	ap_search(3, LEFT, TARGET_C);
+	for(int i = 0; i < 10; i++) {
+		volatile uint8_t *x = AP_CAM_C[i];
+	}
+	ap_search(5, LEFT, TARGET_C);
+	for(int i = 0; i < 10; i++) {
+		volatile uint8_t *x = AP_CAM_C[i];
+	}
+	ap_search(7, LEFT, TARGET_C);
+	for(int i = 0; i < 10; i++) {
+		volatile uint8_t *x = AP_CAM_C[i];
+	}
+}
 
 #endif /* AP_TESTS_H_ */

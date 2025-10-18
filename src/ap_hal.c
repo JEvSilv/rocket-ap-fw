@@ -106,11 +106,11 @@ void ap_computing(APOperations op, APInternalCollunm internal_col, APOpDirection
   return;
 }
 
-void ap_trigger_computing(APOperations op, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target) {
+void ap_trigger_computing(APOperations op, APCollunm col, APInternalCollunm internal_col, APOpDirection op_direction, OpTarget op_target) {
 	set_control_reg(TRUE, op_target, FALSE, FALSE);
-	set_mode_reg(internal_col, CAM_A, op_direction, op);
+	set_mode_reg(internal_col, col, op_direction, op);
 	set_control_reg(TRUE, op_target, TRUE, FALSE);
-	waiting_for_ap_computing(5);
+	ap_waiting_for_computing(5);
 }
 
 void ap_vertical_computing(APOperations op, APCollunm col,
@@ -155,7 +155,7 @@ volatile uint8_t ap_irq_check() {
   return ap_irq;
 }
 
-BitState waiting_for_ap_computing(uint32_t loops) {
+BitState ap_waiting_for_computing(uint32_t loops) {
 	while(loops--) {
 		if(ap_irq_check() == TRUE) {
 			 *AP_CONTROL = 0x0;
@@ -167,7 +167,7 @@ BitState waiting_for_ap_computing(uint32_t loops) {
 }
 
 
-void flush_col_ap(APCollunm col, APInternalCollunm internal_col) {
+void ap_flush_col(APCollunm col, APInternalCollunm internal_col) {
 	  set_control_reg(1, 0, 0, 0);
 	  set_mode_reg(internal_col, col, 0, 0);
 	  set_control_reg(1, 0, 0, 1 << col);
@@ -175,13 +175,30 @@ void flush_col_ap(APCollunm col, APInternalCollunm internal_col) {
 	  set_control_reg(0, 0, 0, 0);
 }
 
+//voi
+
 void ap_set_value(APCollunm col, APInternalCollunm internal_col, uint8_t value) {
 	  volatile uint32_t addr = CAM_A_0_BASE_ADDR + (AP_COL_SIZE* 2 * ((uint8_t) col)) + (AP_COL_SIZE * ((uint8_t) internal_col));
 	  uint8_t *ap = (volatile uint8_t *) addr;
 	  *ap = value;
-	  *AP_CONTROL = 0x1000000;
 	  set_control_reg(1, 0, 0, 0);
 	  set_mode_reg(internal_col, col, 0, SET);
 	  set_control_reg(1, 0, 1, 0);
-	  waiting_for_ap_computing(5);
+	  ap_waiting_for_computing(5);
 }
+
+void ap_search(uint8_t key, APInternalCollunm internal_col, OpTarget target) {
+	volatile uint8_t * key_addr = (volatile uint8_t *) CAM_B_0_BASE_ADDR;
+	if (internal_col == 1) {
+		key_addr = (volatile uint8_t *) CAM_B_1_BASE_ADDR;
+	}
+	*key_addr = key;
+	set_control_reg(TRUE, target, 0, 0);
+	set_mode_reg(internal_col, 0, 0, SEARCH);
+	set_control_reg(TRUE, target, TRUE, 0);
+	ap_waiting_for_computing(5);
+}
+
+
+
+

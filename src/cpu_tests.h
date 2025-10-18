@@ -20,6 +20,11 @@ void sgemm_golden(int m_len, int k_len, int n_len, uint8_t *a, uint8_t *b,
 				c[i * n_len + j] += a[i * k_len + k] * b[j + k * n_len];
 }
 
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void saxpy_golden(int n, uint8_t a, uint8_t *x, uint8_t *y);
+#pragma GCC pop_options
+
 // saxpy
 void saxpy_golden(int n, uint8_t a, uint8_t *x, uint8_t *y) {
 	for (int i = 0; i < n; ++i) {
@@ -33,7 +38,7 @@ void reduce_golden(uint8_t *a, uint8_t *b, uint8_t *result_sum,
 	int count = 0;
 	uint8_t s = 0;
 	for (int i = 0; i < n; ++i) {
-		if (a[i] != 42.0) {
+		if (a[i] != 3) {
 			s += a[i] * b[i];
 			count++;
 		}
