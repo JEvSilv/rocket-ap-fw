@@ -22,7 +22,7 @@
 ########################################################
 
 
-VPATH = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal
+VPATH = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -94,7 +94,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-pc-linux-gnu
+build_triplet = x86_64-pc-msys
 host_triplet = riscv64-unknown-elf
 
 ########################################################
@@ -347,22 +347,22 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/missing aclocal-1.15
+ACLOCAL = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = riscv64-unknown-elf-ar
-AUTOCONF = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/missing autoconf
-AUTOHEADER = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/missing autoheader
-AUTOMAKE = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/missing automake-1.15
+AUTOCONF = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/missing autoconf
+AUTOHEADER = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/missing autoheader
+AUTOMAKE = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/missing automake-1.15
 AWK = gawk
 CC = riscv64-unknown-elf-gcc
 CCAS = riscv64-unknown-elf-gcc
 CCASDEPMODE = depmode=gcc3
-CCASFLAGS = -march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/install/include --specs=nano.specs -DMTIME_RATE_HZ_DEF=32768 -Os -g
+CCASFLAGS = -march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/install/include --specs=nano.specs -DMTIME_RATE_HZ_DEF=32768 -Os
 CCDEPMODE = depmode=gcc3
-CFLAGS = -march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/install/include --specs=nano.specs -DMTIME_RATE_HZ_DEF=32768 -Os -g
+CFLAGS = -march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/install/include --specs=nano.specs -DMTIME_RATE_HZ_DEF=32768 -Os
 CPPFLAGS = 
-CYGPATH_W = echo
+CYGPATH_W = cygpath -w
 DEFS = -DPACKAGE_NAME=\"freedom-metal\" -DPACKAGE_TARNAME=\"freedom-metal\" -DPACKAGE_VERSION=\"v0.1.2\" -DPACKAGE_STRING=\"freedom-metal\ v0.1.2\" -DPACKAGE_BUGREPORT=\"https://github.com/sifive/freedom-metal/issues\" -DPACKAGE_URL=\"https://github.com/sifive/freedom-metal\" -DPACKAGE=\"freedom-metal\" -DVERSION=\"v0.1.2\"
 DEPDIR = .deps
 ECHO_C = 
@@ -378,10 +378,10 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MACHINE_HEADER = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal.h
-MACHINE_INLINE = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal-inline.h
+MACHINE_HEADER = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal.h
+MACHINE_INLINE = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal-inline.h
 MAINT = #
-MAKEINFO = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/missing makeinfo
+MAKEINFO = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
 OBJEXT = o
 PACKAGE = freedom-metal
@@ -392,16 +392,16 @@ PACKAGE_TARNAME = freedom-metal
 PACKAGE_URL = https://github.com/sifive/freedom-metal
 PACKAGE_VERSION = v0.1.2
 PATH_SEPARATOR = :
-PLATFORM_HEADER = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal-platform.h
+PLATFORM_HEADER = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal-platform.h
 RANLIB = riscv64-unknown-elf-ranlib
 SET_MAKE = 
-SHELL = /bin/bash
+SHELL = /bin/sh
 STRIP = riscv64-unknown-elf-strip
 VERSION = v0.1.2
-abs_builddir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/build/release
-abs_srcdir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal
-abs_top_builddir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/build/release
-abs_top_srcdir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal
+abs_builddir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/build/release
+abs_srcdir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal
+abs_top_builddir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/build/release
+abs_top_srcdir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal
 ac_ct_AR = 
 ac_ct_CC = 
 am__include = include
@@ -410,10 +410,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = x86_64-pc-linux-gnu
+build = x86_64-pc-msys
 build_alias = 
 build_cpu = x86_64
-build_os = linux-gnu
+build_os = msys
 build_vendor = pc
 builddir = .
 datadir = ${datarootdir}
@@ -429,8 +429,8 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/install-sh
-libdir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/install/lib/release
+install_sh = ${SHELL} /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/install-sh
+libdir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/install/lib/release
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
@@ -438,18 +438,18 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/install
+prefix = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/install
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
-srcdir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal
+srcdir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal
 sysconfdir = ${prefix}/etc
 target_alias = 
 top_build_prefix = 
 top_builddir = .
-top_srcdir = /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal
+top_srcdir = /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal
 
 ########################################################
 # Metal header files
@@ -1419,15 +1419,15 @@ uninstall-am: uninstall-libLIBRARIES uninstall-nobase_includeHEADERS
 .PRECIOUS: Makefile
 
 
-metal/machine.h: /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal.h
+metal/machine.h: /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal.h
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-metal/machine/inline.h: /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal-inline.h
+metal/machine/inline.h: /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal-inline.h
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-metal/machine/platform.h: /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/bsp/metal-platform.h
+metal/machine/platform.h: /C/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/bsp/metal-platform.h
 	@mkdir -p $(dir $@)
 	cp $< $@
 

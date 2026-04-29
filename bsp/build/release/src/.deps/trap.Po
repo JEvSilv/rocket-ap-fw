@@ -1,2 +1,2 @@
 src/trap.o: \
- /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/trap.S
+ C:/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/src/trap.S

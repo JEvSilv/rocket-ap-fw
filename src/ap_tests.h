@@ -10,9 +10,55 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "util.h"
 #include "env_tests.h"
 #include "ap_hal.h"
+
+// Prototypes
+int ap_computing_vertical_test(APOperations op, APInternalCollunm internal_col,
+		uint8_t seed);
+int ap_computing_horizontal_test(APOperations op,
+		APInternalCollunm internal_col, uint8_t seed);
+void pointer_ap_rw_test();
+void testing_internal_cols();
+void api_r_w_ap_test();
+void asm_memory_fun_tests();
+void functional_test();
+void vector_ap_op_kernel_horizontal(APOperations op, uint8_t *A, uint8_t *B,
+		uint8_t *C, uint32_t size);
+void fill_a_col(uint8_t factor, int size);
+void fill_a_b_cols(uint8_t *A, uint8_t *B, int size);
+void offload(int size);
+void ap_monitor_breakpoint();
+void accum();
+void vector_ap_op_horizontal(APOperations op, int size, int seed);
+void test_offload(int size);
+void accum_data_manipulation(int size);
+void accumulate_horizontal();
+void accumulate_vertical();
+void test_vector_ap_op_horizontal();
+void ap_accum();
+void ap_reduce(uint8_t *a, uint8_t *b, uint8_t *result_sum,
+		uint8_t *result_count, int n);
+void ap_search_test();
+void ap_set_test();
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_mm(int m_len, int k_len, int n_len);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_mm_v2(int m_len, int k_len, int n_len);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_mm_v3(int m_len, int k_len, int n_len);
+#pragma GCC pop_options
 
 int ap_computing_vertical_test(APOperations op, APInternalCollunm internal_col,
 		uint8_t seed) {
@@ -45,6 +91,7 @@ int ap_computing_horizontal_test(APOperations op,
 	volatile uint8_t *A = (volatile uint8_t*) malloc(AP_COL_SIZE);
 	volatile uint8_t *B = (volatile uint8_t*) malloc(AP_COL_SIZE);
 	volatile uint8_t *C = (volatile uint8_t*) malloc(AP_COL_SIZE);
+	volatile uint8_t *cam_c = (volatile uint8_t *) CAM_C_0_BASE_ADDR;
 	volatile uint64_t cycle_count;
 	unsigned long long start = 0, end = 0;
 
@@ -69,7 +116,7 @@ int ap_computing_horizontal_test(APOperations op,
 
 	*AP_CONTROL = 0x0;
 
-	ap_read_vector(CAM_C, internal_col, C, AP_COL_SIZE);
+	//ap_read_vector(CAM_C, internal_col, C, AP_COL_SIZE);
 
 	int index_error = 0;
 
@@ -77,7 +124,7 @@ int ap_computing_horizontal_test(APOperations op,
 		uint8_t a = A[i];
 		uint8_t b = B[i];
 
-		volatile uint8_t ap_op = C[i];
+		volatile uint8_t ap_op = cam_c[i];
 		volatile uint8_t sw_op = ap_unit_test_sw(op, a, b);
 
 		if (ap_op != sw_op) {
@@ -380,10 +427,14 @@ void vector_ap_op_horizontal(APOperations op, int size, int seed) {
 }
 
 void test_offload(int size) {
-	set_mode_reg(0, CAM_C, 0, 0);
+	//set_mode_reg(0, CAM_C, 0, 0);
 	volatile uint8_t *cam_c = (volatile uint8_t*) CAM_C_0_BASE_ADDR;
-	uint8_t *data = (uint8_t*) 0x80000300;
+	volatile uint8_t *data = (volatile uint8_t*) 0x80000200;
 	uint8_t *v = (uint8_t*) malloc(size);
+
+	for (int i = 0; i < size; i++) {
+		data[i] = 0;
+	}
 
 	start_compute_cycles();
 	for (int i = 0; i < size; i++) {
@@ -512,20 +563,307 @@ void ap_reduce(uint8_t *a, uint8_t *b, uint8_t *result_sum,
 }
 
 void ap_search_test() {
-	for(int i = 0; i < 10; i++) {
-		AP_CAM_A[i] = i;
+	for(int i = 0; i < AP_COL_SIZE; i++) {
+		AP_CAM_A[i] = 5;
 	}
-	ap_search(3, LEFT, TARGET_C);
-	for(int i = 0; i < 10; i++) {
-		volatile uint8_t *x = AP_CAM_C[i];
+
+	AP_CAM_A[10] = 10;
+	start_compute_cycles();
+	ap_search(10, LEFT, TARGET_C);
+	end_compute_cycles();
+
+	for(int i = 0; i < AP_COL_SIZE; i++) {
+		r_v_mgmt.A[i] = AP_CAM_C[i];
 	}
-	ap_search(5, LEFT, TARGET_C);
-	for(int i = 0; i < 10; i++) {
-		volatile uint8_t *x = AP_CAM_C[i];
+
+//	for(int i = 0; i < 10; i++) {
+//		AP_CAM_A[i] = i;
+//	}
+//	ap_search(3, LEFT, TARGET_C);
+//	for(int i = 0; i < 10; i++) {
+//		r_v_mgmt.A[i] = AP_CAM_C[i];
+//	}
+//	ap_search(5, LEFT, TARGET_C);
+//	for(int i = 0; i < 10; i++) {
+//		r_v_mgmt.A[i] = AP_CAM_C[i];
+//	}
+//	ap_search(7, LEFT, TARGET_C);
+//	for(int i = 0; i < 10; i++) {
+//		r_v_mgmt.A[i] = AP_CAM_C[i];
+//	}
+	return;
+}
+
+void ap_set_test() {
+	//start_compute_cycles();
+	ap_set_value(CAM_A, LEFT, 10);
+	//end_compute_cycles();
+	start_compute_cycles();
+	memset(r_v_mgmt.A, 'A', RANDOM_VECTORS_SIZE);
+	memset(r_v_mgmt.B, 'B', RANDOM_VECTORS_SIZE);
+	end_compute_cycles();
+}
+
+void ap_memcpy_test() {
+	uint8_t str1[10] = "abcdefghij";
+	start_compute_cycles();
+	//memcpy(AP_CAM_A, str1, sizeof(uint8_t)*10);
+	memcpy(AP_CAM_A, r_v_mgmt.A, RANDOM_VECTORS_SIZE);
+	end_compute_cycles();
+}
+
+
+void ap_matrix_col_mm(uint8_t factor, size_t bytes, int iterator) {
+	// SET FACTOR
+	ap_set_value_cam_a_left(factor);
+
+	// MULT
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+
+	// COPY RESULT
+	ap_memcpy(AP_CAM_A_1, AP_CAM_C, bytes);
+
+	// ROW ACCUM
+	ap_trigger_computing_w_wait(ADD_D, HORIZONTAL, RIGHT);
+
+	ap_flush_c_0();
+}
+
+void ap_test_add_d() {
+	AP_CAM_A_1[0] = 2;
+	AP_CAM_A_1[1] = 6;
+	AP_CAM_A_1[2] = 2;
+
+	ap_trigger_computing_w_wait(ADD_D, HORIZONTAL, RIGHT);
+
+	AP_CAM_A_1[0] = 3;
+	AP_CAM_A_1[1] = 9;
+	AP_CAM_A_1[2] = 3;
+
+	ap_trigger_computing_w_wait(ADD_D, HORIZONTAL, RIGHT);
+}
+
+
+void ap_mm(int m_len, int k_len, int n_len) {
+	//A = {
+	// 2 3 1
+	// 1 3 2
+	// 3 1 3
+	// };
+
+//	r_v_mgmt.A[0] = 2;
+//	r_v_mgmt.A[1] = 3;
+//	r_v_mgmt.A[2] = 1;
+//	r_v_mgmt.A[3] = 1;
+//	r_v_mgmt.A[4] = 3;
+//	r_v_mgmt.A[5] = 2;
+//	r_v_mgmt.A[6] = 3;
+//	r_v_mgmt.A[7] = 1;
+//	r_v_mgmt.A[8] = 3;
+
+	//B = {
+	// 1 2
+	// 3 2
+	// 1 3
+	// };
+
+//	r_v_mgmt.B[0] = 1;
+//	r_v_mgmt.B[1] = 2;
+//	r_v_mgmt.B[2] = 3;
+//	r_v_mgmt.B[3] = 2;
+//	r_v_mgmt.B[4] = 1;
+//	r_v_mgmt.B[5] = 3;
+
+//	start_compute_cycles();
+	for(int i = 0; i < m_len; i++) {
+		for(int j = 0; j < k_len; j++) {
+			ap_memcpy(AP_CAM_B, &r_v_mgmt.B[j*n_len], n_len);
+			ap_matrix_col_mm(r_v_mgmt.A[(i*k_len)+j], n_len, j);
+		}
+		ap_memcpy(&r_v_mgmt.C[i*n_len], AP_CAM_C_1, n_len);
+		ap_flush_c_1();
 	}
-	ap_search(7, LEFT, TARGET_C);
-	for(int i = 0; i < 10; i++) {
-		volatile uint8_t *x = AP_CAM_C[i];
+//	end_compute_cycles();
+}
+
+void ap_matrix_col_mm_window(uint8_t factor, size_t bytes) {
+	// SET FACTOR
+	ap_set_value_cam_a_left(factor);
+
+	// MULT
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+
+	// ROW ACCUM // TARGET_A
+	ap_trigger_computing_w_wait_target_a(ADD_D, HORIZONTAL, 0b011);
+
+	ap_flush_c_0();
+}
+
+void ap_matrix_col_mm_window_2(uint8_t factor, size_t bytes) {
+	// SET FACTOR
+	ap_set_value_cam_a_left(factor);
+
+	// MULT
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+
+	// ROW ACCUM // TARGET_A
+	ap_trigger_computing_w_wait_target_a(ADD_D, HORIZONTAL, 0b011);
+
+	ap_flush_c_0();
+}
+
+void ap_mm_v2(int m_len, int k_len, int n_len) {
+	//A = {
+	// 2 3 1
+	// 1 3 2
+	// 3 1 3
+	// };
+
+//	r_v_mgmt.A[0] = 2;
+//	r_v_mgmt.A[1] = 3;
+//	r_v_mgmt.A[2] = 1;
+//	r_v_mgmt.A[3] = 1;
+//	r_v_mgmt.A[4] = 3;
+//	r_v_mgmt.A[5] = 2;
+//	r_v_mgmt.A[6] = 3;
+//	r_v_mgmt.A[7] = 1;
+//	r_v_mgmt.A[8] = 3;
+
+	//B = {
+	// 1 2
+	// 3 2
+	// 1 3
+	// };
+
+//	r_v_mgmt.B[0] = 1;
+//	r_v_mgmt.B[1] = 2;
+//	r_v_mgmt.B[2] = 3;
+//	r_v_mgmt.B[3] = 2;
+//	r_v_mgmt.B[4] = 1;
+//	r_v_mgmt.B[5] = 3;
+//
+//
+//	int m_len = 3;
+//	int k_len = 3;
+//	int n_len = 2;
+
+	for(int i = 0; i < m_len; i++) {
+		for(int j = 0; j < k_len; j++) {
+			ap_memcpy(AP_CAM_B, &r_v_mgmt.B[j*n_len], n_len);
+			ap_matrix_col_mm_window(r_v_mgmt.A[(i*k_len)+j], n_len);
+		}
+		ap_memcpy(&r_v_mgmt.C[i*n_len], AP_CAM_A_1, n_len);
+		ap_flush_a_1();
+	}
+}
+
+void ap_mm_v3(int m_len, int k_len, int n_len) {
+	//A = {
+	// 2 3 1
+	// 1 3 2
+	// 3 1 3
+	// };
+
+//	r_v_mgmt.A[0] = 2;
+//	r_v_mgmt.A[1] = 3;
+//	r_v_mgmt.A[2] = 1;
+//	r_v_mgmt.A[3] = 1;
+//	r_v_mgmt.A[4] = 3;
+//	r_v_mgmt.A[5] = 2;
+//	r_v_mgmt.A[6] = 3;
+//	r_v_mgmt.A[7] = 1;
+//	r_v_mgmt.A[8] = 3;
+
+	//B = {
+	// 1 2
+	// 3 2
+	// 1 3
+	// };
+//
+//	r_v_mgmt.B[0] = 1;
+//	r_v_mgmt.B[1] = 2;
+//	r_v_mgmt.B[2] = 3;
+//	r_v_mgmt.B[3] = 2;
+//	r_v_mgmt.B[4] = 1;
+//	r_v_mgmt.B[5] = 3;
+//
+//
+//	int m_len = 3;
+//	int k_len = 3;
+//	int n_len = 2;
+
+	for(int i = 0; i < m_len; i++) {
+		for(int j = 0; j < k_len; j++) {
+			ap_memcpy(&AP_CAM_B[i*n_len], &r_v_mgmt.B[j*n_len], n_len);
+			ap_matrix_col_mm_window_2(r_v_mgmt.A[(i*k_len)+j], n_len);
+		}
+	}
+}
+
+void mm_cols_setup(int m_len, int n_len, int col_a_index) {
+	uint32_t row_b = col_a_index*n_len;
+	for(int i = 0; i < m_len; i++) {
+		uint32_t index_base = i * n_len;
+		uint32_t col_base = i * m_len;
+		for(int j = 0; j < n_len; j++) {
+			AP_CAM_A[index_base+j] = r_v_mgmt.A[col_base+col_a_index];
+			AP_CAM_B[index_base+j] = r_v_mgmt.B[row_b+j];
+		}
+	}
+}
+
+void mm_cols_setup_2(int c_size, int m_len, int n_len, int k_len, int mm_index) {
+    uint32_t a_index = mm_index;
+    uint32_t b_base  = mm_index * n_len;
+
+    for (int i = 0; i < c_size; i++) {
+        int col = i % n_len;
+
+        AP_CAM_A[i] = r_v_mgmt.A[a_index];
+        AP_CAM_B[i] = r_v_mgmt.B[b_base + col];
+
+        if (col == n_len - 1) {
+            a_index += k_len;
+        }
+    }
+}
+
+void ap_mm_v4(int m_len, int k_len, int n_len) {
+	//A = {
+	// 2 3 1
+	// 1 3 2
+	// 3 1 3
+	// };
+
+//	r_v_mgmt.A[0] = 2;
+//	r_v_mgmt.A[1] = 3;
+//	r_v_mgmt.A[2] = 1;
+//	r_v_mgmt.A[3] = 1;
+//	r_v_mgmt.A[4] = 3;
+//	r_v_mgmt.A[5] = 2;
+//	r_v_mgmt.A[6] = 3;
+//	r_v_mgmt.A[7] = 1;
+//	r_v_mgmt.A[8] = 3;
+
+	//B = {
+	// 1 2
+	// 3 2
+	// 1 3
+	// };
+
+//	r_v_mgmt.B[0] = 1;
+//	r_v_mgmt.B[1] = 2;
+//	r_v_mgmt.B[2] = 3;
+//	r_v_mgmt.B[3] = 2;
+//	r_v_mgmt.B[4] = 1;
+//	r_v_mgmt.B[5] = 3;
+	uint32_t c_size = m_len * n_len;
+	for(int i = 0; i < m_len; i++) {
+		//mm_cols_setup_2(c_size, m_len, n_len, k_len, i);
+		mm_cols_setup(m_len, n_len, i);
+		ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+		ap_trigger_computing_w_wait_target_a(ADD_D, HORIZONTAL, 0b011);
+		ap_flush_c_0();
 	}
 }
 

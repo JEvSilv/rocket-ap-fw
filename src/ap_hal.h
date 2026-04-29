@@ -11,7 +11,7 @@
 
 
 /* Defines */
-#define AP_COL_SIZE 64
+#define AP_COL_SIZE 512
 #define COL_QUANT 6
 #define AP_BASE_ADDR 0x80004000
 
@@ -61,7 +61,8 @@ typedef enum {
   SUB = 5,
   MULT = 6,
   SET = 7,
-  SEARCH = 8
+  SEARCH = 8,
+  ADD_D = 9
 } APOperations;
 
 typedef enum {
@@ -72,7 +73,7 @@ typedef enum {
 
 typedef enum {
   LEFT = 0,
-  RIGHT = 1,
+  RIGHT = 7, // 0b111
 } APInternalCollunm;
 
 typedef enum { MEMORY = 0, ASSOCIATIVE_PROCESSOR = 1 } APMode;
@@ -107,9 +108,25 @@ void tiny_delay(uint32_t delay_in_nops);
 void warmup_ap();
 #pragma GCC pop_options
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+void reset_ap_engine();
+#pragma GCC pop_options
+
+// Extra
 void ap_search(uint8_t key, APInternalCollunm internal_col, OpTarget target);
 
 void ap_flush_col(APCollunm col, APInternalCollunm internal_col);
+
+void ap_flush_a_1();
+
+void ap_flush_b_0();
+
+void ap_flush_c_0();
+
+void ap_flush_c_1();
+
+void ap_memcpy(void * target, void * src, size_t bytes);
 
 // R/W functions
 void ap_write_vector(APCollunm col, APInternalCollunm internal_col, uint8_t *V,
@@ -123,6 +140,8 @@ void ap_read_result_vector(APInternalCollunm internal_col, uint8_t *V,
 
 void ap_set_value(APCollunm col, APInternalCollunm internal_col, uint8_t value);
 
+void ap_set_value_cam_a_left(uint8_t factor);
+
 // Assembly
 extern void ap_store_data(unsigned int addr, uint8_t data);
 extern unsigned char ap_get_data(unsigned int addr);
@@ -131,6 +150,10 @@ extern void ap_get_data_to(unsigned int dest, unsigned int src);
 // AP computing
 void ap_trigger_computing_w_wait(APOperations op, APOpDirection op_direction, APInternalCollunm internal_col);
 
+void ap_trigger_computing_w_wait_target_a(APOperations op, APOpDirection op_direction, uint8_t internal_col_bits);
+
+void ap_trigger_vertical_computing_target(APOperations op, APCollunm col,
+		APInternalCollunm internal_col, OpTarget target);
 
 void ap_computing(APOperations op, APInternalCollunm internal_col,
                   APOpDirection op_direction, uint8_t *A, uint8_t *B,

@@ -1,2 +1,2 @@
 src/vector.o: \
- /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/vector.S
+ C:/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/src/vector.S
