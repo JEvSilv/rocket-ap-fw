@@ -29,12 +29,12 @@ void basic_mem_test_2() {
 
 void flush_test() {
 	basic_mem_test_2();
-	flush_col_ap(CAM_A, LEFT);
-	flush_col_ap(CAM_A, RIGHT);
-	flush_col_ap(CAM_B, LEFT);
-	flush_col_ap(CAM_B, RIGHT);
-	flush_col_ap(CAM_C, LEFT);
-	flush_col_ap(CAM_C, RIGHT);
+	ap_flush_col(CAM_A, LEFT);
+	ap_flush_col(CAM_A, RIGHT);
+	ap_flush_col(CAM_B, LEFT);
+	ap_flush_col(CAM_B, RIGHT);
+	ap_flush_col(CAM_C, LEFT);
+	ap_flush_col(CAM_C, RIGHT);
 }
 
 
@@ -123,7 +123,7 @@ void op_target_setup() {
   set_mode_reg(1, 0, 0, ADD);
   set_control_reg(1, 1, 1, 0);
 
-  waiting_for_ap_computing(3);
+  ap_waiting_for_computing(3);
 
   return;
 }

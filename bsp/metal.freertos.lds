@@ -14,9 +14,9 @@ ENTRY(_enter)
 
 MEMORY
 {
-    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x4000
-    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x4000
-    rom (irx!wa) : ORIGIN = 0x20000000, LENGTH = 0x2000
+    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x8000
+    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x8000
+    rom (irx!wa) : ORIGIN = 0x40400000, LENGTH = 0xc00000
 }
 
 PHDRS
@@ -80,10 +80,10 @@ SECTIONS
     PROVIDE(__metal_eccscrub_bit = 0);
 
     /* The RAM memories map for ECC scrubbing */
+    /* Default zero-scrub to at most 64KB, for limiting RTL simulation run time. */
+    /* User is recommended to enable the full size for manual RTL simulation run! */
     PROVIDE( metal_sys_sram_0_memory_start = 0x80000000 );
-    PROVIDE( metal_sys_sram_0_memory_end = 0x80000000 + 0x4000 );
-    PROVIDE( metal_sys_sram_1_memory_start = 0x80008000 );
-    PROVIDE( metal_sys_sram_1_memory_end = 0x80008000 + 0x4000 );
+    PROVIDE( metal_sys_sram_0_memory_end = 0x80000000 + 0x10000 );
 
     /* ROM SECTION
      *

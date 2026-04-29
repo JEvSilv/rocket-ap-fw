@@ -15,9 +15,9 @@ ENTRY(_enter)
 
 MEMORY
 {
-    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x4000
-    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x4000
-    rom (irx!wa) : ORIGIN = 0x20000000, LENGTH = 0x2000
+    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x8000
+    ram (arw!xi) : ORIGIN = 0x80000000, LENGTH = 0x8000
+    rom (irx!wa) : ORIGIN = 0x40400000, LENGTH = 0xc00000
 }
 
 PHDRS
@@ -81,10 +81,10 @@ SECTIONS
     PROVIDE(__metal_eccscrub_bit = 0);
 
     /* The RAM memories map for ECC scrubbing */
+    /* Default zero-scrub to at most 64KB, for limiting RTL simulation run time. */
+    /* User is recommended to enable the full size for manual RTL simulation run! */
     PROVIDE( metal_sys_sram_0_memory_start = 0x80000000 );
-    PROVIDE( metal_sys_sram_0_memory_end = 0x80000000 + 0x4000 );
-    PROVIDE( metal_sys_sram_1_memory_start = 0x80008000 );
-    PROVIDE( metal_sys_sram_1_memory_end = 0x80008000 + 0x4000 );
+    PROVIDE( metal_sys_sram_0_memory_end = 0x80000000 + 0x10000 );
 
     /* ROM SECTION
      *
@@ -168,6 +168,77 @@ SECTIONS
 
     .itim : ALIGN(8) {
         *(.itim .itim.*)
+        /* The following takes advantage of -ffunction sections to link benchmark
+         * code into the ITIM when the ITIM is big enough to take advantage of it.
+         */
+        *(.text.startup.main)
+
+        /* Dhrystone */
+        *(.text.Func_1)
+        *(.text.Func_2)
+        *(.text.Func_3)
+        *(.text.malloc)
+        *(.text.memchr)
+        *(.text.memcpy)
+        *(.text.memmove)
+        *(.text.Proc_1)
+        *(.text.Proc_2)
+        *(.text.Proc_3)
+        *(.text.Proc_4)
+        *(.text.Proc_5)
+        *(.text.Proc_6)
+        *(.text.Proc_7)
+        *(.text.Proc_8)
+        *(.text.time)
+        *(.text.strcmp)
+        *strcmp.o(.text)
+
+        /* Coremark */
+        *(.text.barebones_clock)
+        *(.text.calc_func)
+        *(.text.check_data_types)
+        *(.text.clock)
+        *(.text.cmp_complex)
+        *(.text.cmp_idx)
+        *(.text.copy_info)
+        *(.text.core_bench_list)
+        *(.text.core_bench_matrix)
+        *(.text.core_bench_state)
+        *(.text.core_init_matrix)
+        *(.text.core_init_state)
+        *(.text.core_list_find)
+        *(.text.core_list_init)
+        *(.text.core_list_insert_new)
+        *(.text.core_list_mergesort)
+        *(.text.core_list_remove)
+        *(.text.core_list_reverse)
+        *(.text.core_list_undo_remove)
+        *(.text.core_state_transition)
+        *(.text.crc16)
+        *(.text.crcu16)
+        *(.text.crcu32)
+        *(.text.crcu8)
+        *(.text.get_seed_32)
+        *(.text.get_time)
+        *(.text.iterate)
+        *(.text.matrix_add_const)
+        *(.text.matrix_mul_const)
+        *(.text.matrix_mul_matrix)
+        *(.text.matrix_mul_matrix_bitextract)
+        *(.text.matrix_mul_vect)
+        *(.text.matrix_sum)
+        *(.text.matrix_test)
+        *(.text.memchr)
+        *(.text.memcpy)
+        *(.text.memmove)
+        *(.text.portable_fini)
+        *(.text.portable_init)
+        *(.text.start_time)
+        *(.text.stop_time)
+        *(.text.time_in_secs)
+        *(.text.unlikely.core_bench_list)
+        *(.text.unlikely.core_list_init)
+        *(.text.unlikely.core_list_mergesort)
     } >itim AT>rom :itim_init
 
     PROVIDE( metal_segment_itim_source_start = LOADADDR(.itim) );

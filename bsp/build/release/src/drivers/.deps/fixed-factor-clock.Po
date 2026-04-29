@@ -1,5 +1,5 @@
 src/drivers/fixed-factor-clock.o: \
- /root/wsFreedomStudio/sifive_e24_rtl_eval_21G1_hello/freedom-metal/src/drivers/fixed-factor-clock.c \
+ C:/Users/camil/wsFreedomStudio/sifive_e24_rtl_eval_llama_hello/freedom-metal/src/drivers/fixed-factor-clock.c \
  metal/machine/platform.h
 
 metal/machine/platform.h:
