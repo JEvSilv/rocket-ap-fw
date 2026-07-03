@@ -60,6 +60,71 @@ void ap_mm_v2(int m_len, int k_len, int n_len);
 void ap_mm_v3(int m_len, int k_len, int n_len);
 #pragma GCC pop_options
 
+#pragma GCC push_options
+#pragma GCC optimize ("O3")
+void mm_cols_setup(int m_len, int n_len, int col_a_index);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O3")
+void ap_mm_v4(int m_len, int k_len, int n_len);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_process_bayer_matrix_naive(uint32_t i_address, uint32_t o_address, int total_pixels, int size);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_offload_camera_after_filter(uint32_t o_address, int size);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void load_camera_image(uint32_t i_address, int size);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void fill_ap_with_bayer_filter();
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_index(int n, uint32_t index, APInternalCollunm ic);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void ap_index_offload(uint32_t a_adress, int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void fill_ap_index();
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void load_ap_b_by_addr(int32_t addr, int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void load_ap_a_by_addr(int32_t addr, int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void ap_saxpy(uint32_t a_adress, uint32_t b_adress, uint32_t c_adress, int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_hamming(int n);
+#pragma GCC pop_options
+
 int ap_computing_vertical_test(APOperations op, APInternalCollunm internal_col,
 		uint8_t seed) {
 	uint8_t *A = (uint8_t*) malloc(AP_COL_SIZE);
@@ -507,29 +572,7 @@ void test_vector_ap_op_horizontal() {
 	vector_ap_op_horizontal(op, sizes[7], 14);
 }
 
-//void ap_saxpy(int n, uint8_t a, uint8_t *x, uint8_t *y) {
-//	ap_set_value(CAM_B, LEFT, a);
-//	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
-//	ap_flush_col(CAM_A, LEFT);
-//	for (int i = 0; i < n; i++) {
-//		AP_CAM_B[i] = y[i];
-//	}
-//	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
-//}
-//
-//// Maybe put some starting point
-//void ap_index(uint8_t *a, uint8_t *b, uint8_t *c, int n) {
-//	for(int i = 0; i < n; i++) {
-//		AP_CAM_A[i] = c[i];
-//		AP_CAM_B[i] = i%15;
-//	}
-//	ap_trigger_computing(MULT, LEFT, HORIZONTAL, TARGET_C);
-//	// ap_flush_col(CAM_B, LEFT);
-//	for(int i = 0; i < n; i++) {
-//		AP_CAM_B[i] = b[i];
-//	}
-//	ap_trigger_computing(ADD, LEFT, HORIZONTAL, TARGET_A);
-//}
+
 
 void ap_accum() {
 	for(int i = 0; i < 10; i++) {
@@ -859,12 +902,354 @@ void ap_mm_v4(int m_len, int k_len, int n_len) {
 //	r_v_mgmt.B[5] = 3;
 	uint32_t c_size = m_len * n_len;
 	for(int i = 0; i < m_len; i++) {
-		//mm_cols_setup_2(c_size, m_len, n_len, k_len, i);
+		//start_compute_cycles();
+		start_compute_cycles();
 		mm_cols_setup(m_len, n_len, i);
+		accum_cycles(0);
+		//end_compute_cycles();
+		start_compute_cycles();
 		ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
 		ap_trigger_computing_w_wait_target_a(ADD_D, HORIZONTAL, 0b011);
 		ap_flush_c_0();
+		accum_cycles(1);
+	}
+	commit_accum_cycles(0);
+	commit_accum_cycles(1);
+	memcpy(r_v_mgmt.C, AP_CAM_A_1, c_size);
+}
+
+/////////////////// BAYER FILTER /////////////////////
+void fill_ap_with_bayer_filter() {
+	start_compute_cycles();
+	uint8_t bayer_matrix[2][2] = {{0, 2},{3, 1}};
+	for(int i = 0; i < AP_COL_SIZE; i++) {
+		AP_CAM_B[i] = bayer_matrix[0][i & 1];
+		AP_CAM_B_1[i] = bayer_matrix[1][i & 1];
+	}
+	ap_monitor(10);
+}
+
+void load_camera_image(uint32_t i_address, int size) {
+	volatile uint8_t * input_address = (uint8_t*) i_address;
+	int ap_index_0 = 0;
+	int ap_index_1 = 0;
+	// fill CAM_A with image values
+	for(int i = 0; i < size; i++) {
+		for(int j = 0; j < size; j++) {
+			int index = (i*size) + j;
+			if ((i & 1) == 1) {
+				AP_CAM_A_1[ap_index_1] = input_address[index];
+				ap_index_1++;
+			} else {
+				AP_CAM_A[ap_index_0] = input_address[index];
+				ap_index_0++;
+			}
+		}
+	}
+	ap_monitor(10);
+}
+
+void ap_offload_camera_after_filter(uint32_t o_address, int size) {
+	volatile uint8_t * output_address = (uint8_t*) o_address;
+	uint32_t ap_index_0 = 0;
+	uint32_t ap_index_1 = 0;
+
+	for(int i = 0; i < size; i++) {
+		for(int j = 0; j < size; j++) {
+			int index = (i*size) + j;
+			if ((i & 1) == 1) {
+				output_address[index] = AP_CAM_C_1[ap_index_1];
+				ap_index_1++;
+			} else {
+				output_address[index] = AP_CAM_C[ap_index_0];
+				ap_index_0++;
+			}
+		}
+	}
+
+}
+
+void ap_process_bayer_matrix_naive(uint32_t i_address, uint32_t o_address, int total_pixels, int size) {
+	start_compute_cycles();
+	load_camera_image(i_address, size);
+	end_compute_cycles();
+
+	// AP computation
+	start_compute_cycles();
+	//ap_trigger_computing_w_wait(ADD, HORIZONTAL, LEFT);
+	//ap_trigger_computing_w_wait(ADD, HORIZONTAL, RIGHT);
+
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, RIGHT);
+
+	end_compute_cycles();
+
+
+	start_compute_cycles();
+	ap_offload_camera_after_filter(o_address, size);
+	end_compute_cycles();
+}
+//////////////////////////////////////////////////////////////////
+
+/////////////////// LOADS //////////////////////////////
+#include "camera_64x64_4bit.h";
+
+void load_ap_a_by_addr(int32_t addr, int n) {
+	//volatile uint8_t * v = (uint8_t*) addr;
+	for(int i = 0; i < n; i++) {
+		//AP_CAM_A[i] = v[i];
+		AP_CAM_A[i] = CAMERA_64x64_4BIT[i];
 	}
 }
+
+void load_ap_a_1_by_addr(int32_t addr, int n) {
+	volatile uint8_t * v = (uint8_t*) addr;
+	for(int i = 0; i < n; i++) {
+		//AP_CAM_A_1[i] = v[i];
+		AP_CAM_A_1[i] = CAMERA_64x64_4BIT[i];
+	}
+}
+
+void load_ap_b_by_addr(int32_t addr, int n) {
+	volatile uint8_t * v = (uint8_t*) addr;
+	for(int i = 0; i < n; i++) {
+		//AP_CAM_B[i] = v[i];
+		AP_CAM_B[i] = CAMERA_64x64_4BIT[i];
+	}
+}
+
+void load_ap_b_1_by_addr(int32_t addr, int n) {
+	volatile uint8_t * v = (uint8_t*) addr;
+	for(int i = 0; i < n; i++) {
+		//AP_CAM_B_1[i] = v[i];
+		AP_CAM_B_1[i] = CAMERA_64x64_4BIT[i];
+	}
+}
+
+///////////////////////////////////////////////////////
+
+/////////////////// SAXPY KERNEL /////////////////////
+// a = 2*b+c
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void ap_saxpy_load(uint32_t b_adress, uint32_t c_adress, int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("Os")
+void ap_saxpy_offload(uint32_t a_adress, int n);
+#pragma GCC pop_options
+
+extern void ap_offload_asm();
+
+//#include "camera_64x64_4bit.h"
+
+
+void ap_saxpy_load(uint32_t b_adress, uint32_t c_adress, int n) {
+#ifdef camera_64x64
+		volatile uint8_t * b = (uint8_t*) b_adress;
+		volatile uint8_t * c = (uint8_t*) c_adress;
+		for(int i = 0; i < n; i++) {
+		AP_CAM_A[i] = CAMERA_64x64_4BIT[i];
+		AP_CAM_B_1[i] = CAMERA_64x64_4BIT[i];
+	}
+#endif
+
+}
+
+void ap_saxpy_offload(uint32_t a_adress, int n) {
+	volatile uint8_t * a = (uint8_t*) a_adress;
+	for(int i = 0; i < n; i++) {
+//		/a[i] = AP_CAM_A_1[i];
+		a[i] = AP_CAM_A[i];
+	}
+}
+
+void ap_saxpy(uint32_t a_adress, uint32_t b_adress, uint32_t c_adress, int n) {
+	volatile uint32_t * a = (uint32_t*) a_adress;
+	volatile uint8_t * b = (uint8_t*) b_adress;
+	volatile uint8_t * c = (uint8_t*) c_adress;
+
+	start_compute_cycles();
+	ap_saxpy_load(b_adress, c_adress, n);
+	end_compute_cycles();
+
+	ap_set_value_cam_b_left(2);
+
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, LEFT);
+	reset_ap_engine();
+	ap_trigger_computing_w_wait_target_a(ADD, HORIZONTAL, 0b011);
+	end_compute_cycles();
+
+
+	start_compute_cycles();
+	burst_read_on();
+	for(int i = 0; i < (n >> 2); i++) {
+		a[i] = AP_CAM_A_1_W[i];
+	}
+	burst_read_off();
+	end_compute_cycles();
+
+	volatile int x = 10;
+
+}
+
+/////////////////// INDEX KERNEL /////////////////////
+
+
+void fill_ap_index() {
+	for(int i = 0; i < AP_COL_SIZE; i++) {
+		AP_CAM_B_1[i] = i;
+	}
+}
+
+void ap_index_offload(uint32_t a_adress, int n) {
+	uint8_t * a = (uint8_t*) a_adress;
+//	for(int i = 0; i < n; i++) {
+//		a[i] = AP_CAM_A[i];
+//	}
+	//memcpy(a, AP_CAM_A, n);
+
+
+	burst_read_on();
+	for(int i = 0; i < (n >> 2); i++) {
+		a[i] = AP_CAM_A_W[i];
+	}
+	burst_read_off();
+
+}
+
+
+// TODO: COLOCO SÓ EM UM BUFFER?
+void ap_index(int n, uint32_t index, APInternalCollunm ic) {
+	fill_ap_index();
+
+	//ap_monitor(10);
+	start_compute_cycles();
+	load_ap_a_by_addr(0x80003000, n);
+	end_compute_cycles();
+	//ap_monitor(10);
+
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(MULT, HORIZONTAL, 0b010);
+	end_compute_cycles();
+
+	//ap_monitor(10);
+	start_compute_cycles();
+	load_ap_a_1_by_addr(0x80003000, n);
+	end_compute_cycles();
+
+	//ap_monitor(10);
+	start_compute_cycles();
+	ap_trigger_computing_w_wait_target_a(ADD_D, HORIZONTAL, 0b001);
+	end_compute_cycles();
+	//ap_monitor(20);
+
+	//end_compute_cycles();
+	start_compute_cycles();
+	ap_index_offload(0x80002000 + index, n);
+	end_compute_cycles();
+
+}
+//////////////////////////////////////////////////////////////////
+
+////////////////////////////// AP RELU //////////////////////////
+// TODO: CONSTRUIR UMA SOLUÇÃO EM HW
+
+//#include "random_vector.h"
+
+void ap_relu(uint32_t addr, int n) {
+	volatile uint32_t * a = (uint32_t*) addr;
+	start_compute_cycles();
+	for(int i = 0; i < n; i++) {
+		//AP_CAM_A[i] = VETOR_ALEATORIO_4096[i];
+	}
+	end_compute_cycles();
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(RELU, HORIZONTAL, LEFT);
+	end_compute_cycles();
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(RELU, HORIZONTAL, RIGHT);
+	end_compute_cycles();
+
+
+	start_compute_cycles();
+	burst_read_on();
+	for(int i = 0; i < 304; i++) {
+		a[i] = AP_CAM_A_1_W[i];
+	}
+	burst_read_off();
+	end_compute_cycles();
+}
+
+// Vou até 960
+void ap_branch(int n) {
+	volatile uint32_t * a = (uint32_t*) 0x80002000;
+
+	start_compute_cycles();
+	load_ap_a_by_addr(0x80003000, n);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	ap_search(0, LEFT, TARGET_C);
+	ap_search(0, RIGHT, TARGET_C);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	load_ap_b_by_addr(0x80003000, n);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(ADD, HORIZONTAL, RIGHT);
+	ap_trigger_computing_w_wait(ADD, HORIZONTAL, RIGHT);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	burst_read_on();
+	for(int i = 0; i < 120; i++) {
+		a[i] = AP_CAM_C_W[i];
+	}
+
+	for(int i = 0; i < 120; i++) {
+		a[i] = AP_CAM_C_1_W[i];
+	}
+	burst_read_off();
+	end_compute_cycles();
+}
+
+void ap_hamming(int n) {
+	volatile uint32_t * a = (uint32_t*) 0x80002000;
+
+	start_compute_cycles();
+	load_ap_a_by_addr(0x80003000, n);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	load_ap_b_by_addr(0x80003000, n);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	ap_trigger_computing_w_wait(XOR, HORIZONTAL, RIGHT);
+	ap_trigger_computing_w_wait(XOR, HORIZONTAL, LEFT);
+	ap_set_value_cam_b_left(0xff);
+	ap_set_value_cam_b_right(0xff);
+	ap_trigger_computing_w_wait_target_a(XOR, HORIZONTAL, LEFT);
+	ap_trigger_computing_w_wait_target_a(XOR, HORIZONTAL, RIGHT);
+	end_compute_cycles();
+
+	start_compute_cycles();
+	burst_read_on();
+	for(int i = 0; i < 120; i++) {
+		a[i] = AP_CAM_A_W[i];
+	}
+
+	for(int i = 0; i < 120; i++) {
+		a[i] = AP_CAM_A_1_W[i];
+	}
+	burst_read_off();
+	end_compute_cycles();
+}
+
 
 #endif /* AP_TESTS_H_ */

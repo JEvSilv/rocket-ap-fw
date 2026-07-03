@@ -126,6 +126,21 @@ void ap_trigger_computing_w_wait_target_a(APOperations op, APOpDirection op_dire
     #endif
 }
 
+void ap_flush_a_0() {
+	// Lock ap_if_state
+
+	*AP_CONTROL = 0x1000000;
+	*AP_MODE = 0x0; // RIGHT
+	*AP_CONTROL = 0x1000001; // 001 -> Only A col
+	*AP_CONTROL = 0x0;
+	*AP_MODE = 0x0;
+
+	#ifdef AP_MONITOR
+	   ap_monitor(AP_MONITOR_ELEMENTS);
+	#endif
+
+}
+
 void ap_flush_a_1() {
 	// Lock ap_if_state
 
@@ -340,6 +355,34 @@ void ap_set_value_cam_a_left(uint8_t factor) {
 
 }
 
+void ap_set_value_cam_b_left(uint8_t factor) {
+	*AP_CAM_B = factor;
+	set_control_reg(1, 0, 0, 0);
+	set_mode_reg(LEFT, CAM_B, 0, SET);
+	set_control_reg(1, 0, 1, 0);
+	while (ap_irq_check() == 0) {
+	}
+	*AP_CONTROL = 0x0;
+
+	#ifdef AP_MONITOR
+	   ap_monitor(AP_MONITOR_ELEMENTS);
+	#endif
+}
+
+void ap_set_value_cam_b_right(uint8_t factor) {
+	*AP_CAM_B_1 = factor;
+	set_control_reg(1, 0, 0, 0);
+	set_mode_reg(RIGHT, CAM_B, 0, SET);
+	set_control_reg(1, 0, 1, 0);
+	while (ap_irq_check() == 0) {
+	}
+	*AP_CONTROL = 0x0;
+
+	#ifdef AP_MONITOR
+	   ap_monitor(AP_MONITOR_ELEMENTS);
+	#endif
+}
+
 void ap_memcpy(void * target, void * src, size_t bytes) {
 	memcpy(target, src, bytes);
 
@@ -350,7 +393,7 @@ void ap_memcpy(void * target, void * src, size_t bytes) {
 
 void ap_search(uint8_t key, APInternalCollunm internal_col, OpTarget target) {
 	volatile uint8_t *key_addr = (volatile uint8_t*) CAM_B_0_BASE_ADDR;
-	if (internal_col == 1) {
+	if (internal_col == RIGHT) {
 		key_addr = (volatile uint8_t*) CAM_B_1_BASE_ADDR;
 	}
 	*key_addr = key;
@@ -358,9 +401,16 @@ void ap_search(uint8_t key, APInternalCollunm internal_col, OpTarget target) {
 	set_mode_reg(internal_col, 0, 0, SEARCH);
 	set_control_reg(TRUE, target, TRUE, 0);
 	//ap_waiting_for_computing(5);
-	start_compute_cycles();
+	//start_compute_cycles();
 	while (ap_irq_check() == 0) {
 	}
-	end_compute_cycles();
+	//end_compute_cycles();
 }
 
+void burst_read_on() {
+	set_control_reg_updated(0, 1, 0, 0, 0);
+}
+
+void burst_read_off() {
+	set_control_reg_updated(0, 0, 0, 0, 0);
+}

@@ -16,7 +16,7 @@ void sgemm_golden(int m_len, int k_len, int n_len, uint8_t *a, uint8_t *b,
 		uint8_t *c);
 
 #pragma GCC push_options
-#pragma GCC optimize ("O2")
+#pragma GCC optimize ("O3")
 void matmul_cpu();
 #pragma GCC pop_options
 
@@ -27,13 +27,17 @@ void sgemm_golden_cpu_test();
 
 #pragma GCC push_options
 #pragma GCC optimize ("O2")
-void saxpy_golden(int n, uint8_t a, uint8_t *x, uint8_t *y);
+void saxpy_golden(uint32_t r_address, uint32_t x_adress, uint32_t y_adress, int n);
 #pragma GCC pop_options
 
 void reduce_golden(uint8_t *a, uint8_t *b, uint8_t *result_sum,
 		uint8_t *result_count, int n);
 void matmul_golden(uint8_t **a, uint8_t **b, uint8_t **c, int n, int m, int o);
-void index_golden(uint8_t *a, uint8_t *b, uint8_t *c, int n);
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void index_golden(int n);
+#pragma GCC pop_options
 
 #pragma GCC push_options
 #pragma GCC optimize ("O2")
@@ -76,6 +80,31 @@ void test_accum();
 #pragma GCC push_options
 #pragma GCC optimize ("O2")
 void cpu_search_test();
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void process_bayer_matrix(uint32_t i_address, uint32_t o_address, uint32_t size, uint32_t total_pixels);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void process_bayer_matrix_3x3(const uint8_t *input, volatile uint8_t *output, uint32_t size, uint32_t total_pixels);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void relu_golden(int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void branch_golden(int n);
+#pragma GCC pop_options
+
+#pragma GCC push_options
+#pragma GCC optimize ("O2")
+void hamming_code_golden(int n);
 #pragma GCC pop_options
 //-------------------------------------------------------------------------
 
@@ -149,11 +178,20 @@ void sgemm_golden_cpu_test() {
 	end_compute_cycles();
 }
 
+//#include "camera_64x64_4bit.h"
 // saxpy
-void saxpy_golden(int n, uint8_t a, uint8_t *x, uint8_t *y) {
+void saxpy_golden(uint32_t r_address, uint32_t x_adress, uint32_t y_adress, int n) {
+#ifdef camera_64x64
+	uint8_t a = 2;
+	volatile uint8_t * x = (uint8_t*) x_adress;
+	volatile uint8_t * y = (uint8_t*) y_adress;
+	volatile uint8_t * r = (uint8_t*) r_address;
+
 	for (int i = 0; i < n; ++i) {
-		y[i] = a * x[i] + y[i];
+		//r[i] = a * x[i] + y[i];
+		r[i] = 2*CAMERA_64x64_4BIT[i]+CAMERA_64x64_4BIT[i];
 	}
+#endif
 }
 
 // accumulate and reduce
@@ -222,7 +260,7 @@ void matmul_cpu(int m_len, int k_len, int n_len) {
 
     for (int i = 0; i < m_len; ++i) {
         for (int j = 0; j < n_len; ++j) {
-            uint8_t sum = 0.0f;
+            uint8_t sum = 0;
             for (int k = 0; k < k_len; ++k) {
                 sum += r_v_mgmt.A[i * k_len + k] * r_v_mgmt.B[k * n_len + j];
             }
@@ -231,11 +269,45 @@ void matmul_cpu(int m_len, int k_len, int n_len) {
     }
 }
 
+void branch_golden(int n) {
+  volatile uint8_t * a = (uint8_t*) 0x80002000;
+  volatile uint8_t * b = (uint8_t*) 0x80003000;
+  volatile uint8_t * c = (uint8_t*) 0x80003000;
+
+  for (int i = 0; i < n; ++i) {
+    c[i] = (b[i] != 0.0) ? a[i] + b[i] : 1;
+  }
+}
+
+void hamming_code_golden(int n) {
+  volatile uint8_t * a = (uint8_t*) 0x80002000;
+  volatile uint8_t * b = (uint8_t*) 0x80003000;
+  volatile uint8_t * c = (uint8_t*) 0x80003000;
+  uint8_t code = 0xff;
+
+  for (int i = 0; i < n; ++i) {
+    c[i] = (a[i] ^ b[i]) ^ code;
+  }
+}
+
 // index arithmetic
-void index_golden(uint8_t *a, uint8_t *b, uint8_t *c, int n) {
+void index_golden(int n) {
+	volatile uint8_t * a = (uint8_t*) 0x80002000;
+	volatile uint8_t * b = (uint8_t*) 0x80003000;
+	volatile uint8_t * c = (uint8_t*) 0x80003000;
+
 	for (int i = 0; i < n; ++i) {
 		a[i] = b[i] + i * c[i];
 	}
+}
+
+void relu_golden(int n) {
+	volatile uint8_t * data = (uint8_t*) 0x80003000;
+    for (int i = 0; i < n; i++) {
+        if (data[i] < 0) {
+            data[i] = 0;
+        }
+    }
 }
 
 void vector_cpu_op_kernel_or() {
@@ -484,4 +556,64 @@ void cpu_search_test() {
 	return;
 }
 
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+
+const uint8_t matrix_dispersed[3][3] = {
+    {2, 9, 4},
+    {7, 14, 12},
+    {6, 11, 3}
+};
+
+// 2. Define the static Scaled 2x2 Bayer Matrix
+//const uint8_t bayer_matrix[2][2] = {
+//    {3, 11},
+//    {15, 7}
+//};
+
+const uint8_t bayer_matrix[2][2] = {
+    {0, 2},
+    {3, 1}
+};
+
+
+/**
+ * Executes the spatial matrix addition loop with hardware saturation.
+ * Maps a flat 1D vector back to 2D space coordinates dynamically.
+ */
+void process_bayer_matrix_3x3(const uint8_t *input, volatile uint8_t *output, uint32_t size, uint32_t total_pixels) {
+    for (int i = 0; i < total_pixels; i++) {
+        // Reconstruct 2D row (y) and column (x) coordinates from 1D flat index
+        int y = i / size;
+        int x = i % size;
+
+        uint8_t pixel_value = input[i];
+        uint8_t modifier = matrix_dispersed[y % 3][x % 3];
+        //uint8_t mixed_value = pixel_value + modifier;
+        uint8_t mixed_value = pixel_value * modifier;
+        output[i] = mixed_value;
+    }
+}
+
+
+void process_bayer_matrix(uint32_t i_address, uint32_t o_address, uint32_t size, uint32_t total_pixels) {
+	volatile uint8_t * output_address = (uint8_t*) 0x80002000;
+	volatile uint8_t * input_address = (uint8_t*) 0x80003000;
+
+	for (int i = 0; i < total_pixels; i++) {
+        int y = i / size;
+        int x = i % size;
+
+        uint8_t pixel_value = input_address[i];
+        uint8_t modifier = bayer_matrix[y & 1][x & 1];
+        uint16_t mixed_value = pixel_value + modifier;
+        output_address[i] = mixed_value;
+    }
+}
+
+
 #endif /* CPU_TESTS_H_ */
+

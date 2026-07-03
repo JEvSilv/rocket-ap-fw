@@ -7,7 +7,7 @@
 .globl  ap_get_data_to
 .type   ap_get_data_to, @function
 
-#define OUTPUT_AP_ADDR 0x80000200
+#define OUTPUT_AP_ADDR 0x80002000
 
 ap_store_data:
 	sw a1, 0(a0)

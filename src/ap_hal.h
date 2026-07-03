@@ -11,7 +11,8 @@
 
 
 /* Defines */
-#define AP_COL_SIZE 512
+//#define AP_COL_SIZE 512
+#define AP_COL_SIZE 480 // 32 bits
 #define COL_QUANT 6
 #define AP_BASE_ADDR 0x80004000
 
@@ -39,12 +40,25 @@
 #define AP_MODE ((volatile uint32_t *)AP_MODE_CONFIGURATION_ADDR)
 #define AP_IRQ ((volatile uint32_t *)AP_IRQ_ADDR)
 
-#define AP_CAM_A ((volatile uint8_t *)CAM_A_0_BASE_ADDR)
-#define AP_CAM_A_1 ((volatile uint8_t *)CAM_A_1_BASE_ADDR)
-#define AP_CAM_B ((volatile uint8_t *)CAM_B_0_BASE_ADDR)
-#define AP_CAM_B_1 ((volatile uint8_t *)CAM_B_1_BASE_ADDR)
-#define AP_CAM_C ((volatile uint8_t *) CAM_C_0_BASE_ADDR)
-#define AP_CAM_C_1 ((volatile uint8_t *)CAM_C_1_BASE_ADDR)
+//#define AP_CAM_A ((volatile uint8_t *)CAM_A_0_BASE_ADDR)
+//#define AP_CAM_A_1 ((volatile uint8_t *)CAM_A_1_BASE_ADDR)
+//#define AP_CAM_B ((volatile uint8_t *)CAM_B_0_BASE_ADDR)
+//#define AP_CAM_B_1 ((volatile uint8_t *)CAM_B_1_BASE_ADDR)
+//#define AP_CAM_C ((volatile uint8_t *) CAM_C_0_BASE_ADDR)
+//#define AP_CAM_C_1 ((volatile uint8_t *)CAM_C_1_BASE_ADDR)
+
+ #define AP_CAM_A ((volatile uint8_t *)CAM_A_0_BASE_ADDR)
+ #define AP_CAM_A_W ((volatile uint32_t *)CAM_A_0_BASE_ADDR)
+ #define AP_CAM_A_1 ((volatile uint8_t *)CAM_A_1_BASE_ADDR)
+ #define AP_CAM_A_1_W ((volatile uint32_t *)CAM_A_1_BASE_ADDR)
+ #define AP_CAM_B ((volatile uint8_t *)CAM_B_0_BASE_ADDR)
+ #define AP_CAM_B_W ((volatile uint32_t *)CAM_B_0_BASE_ADDR)
+ #define AP_CAM_B_1 ((volatile uint8_t *)CAM_B_1_BASE_ADDR)
+ #define AP_CAM_B_1_W ((volatile uint32_t *)CAM_B_1_BASE_ADDR)
+ #define AP_CAM_C ((volatile uint8_t *) CAM_C_0_BASE_ADDR)
+ #define AP_CAM_C_W ((volatile uint32_t *) CAM_C_0_BASE_ADDR)
+ #define AP_CAM_C_1 ((volatile uint8_t *)CAM_C_1_BASE_ADDR)
+ #define AP_CAM_C_1_W ((volatile uint32_t *)CAM_C_1_BASE_ADDR)
 
 /* Logical operations */
 /* Support for 8 bits */
@@ -62,7 +76,8 @@ typedef enum {
   MULT = 6,
   SET = 7,
   SEARCH = 8,
-  ADD_D = 9
+  ADD_D = 9,
+  RELU = 10
 } APOperations;
 
 typedef enum {
@@ -96,6 +111,11 @@ typedef enum { TARGET_C = 0, TARGET_A = 1 } OpTarget;
   {                                                                      \
     *AP_CONTROL = (ap_if_state << 24) | (ap_op_target << 16) | (ap_trigger_ap << 8) | (ap_rst); \
   }
+
+#define set_control_reg_updated(ap_if_state, burst_read, ap_op_target, ap_trigger_ap, ap_rst)              \
+   {                                                                      \
+     *AP_CONTROL =  (burst_read << 25) | (ap_if_state << 24) | (ap_op_target << 16) | (ap_trigger_ap << 8) | (ap_rst); \
+}
 
 /* Prototypes */
 // Utilities
@@ -141,6 +161,9 @@ void ap_read_result_vector(APInternalCollunm internal_col, uint8_t *V,
 void ap_set_value(APCollunm col, APInternalCollunm internal_col, uint8_t value);
 
 void ap_set_value_cam_a_left(uint8_t factor);
+
+void burst_read_on();
+void burst_read_off();
 
 // Assembly
 extern void ap_store_data(unsigned int addr, uint8_t data);

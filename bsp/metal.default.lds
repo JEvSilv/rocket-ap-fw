@@ -12,8 +12,8 @@ ENTRY(_enter)
 
 MEMORY
 {
-    itim (airwx) : ORIGIN = 0x80008000, LENGTH = 0x8000
-    ram (ariwx) : ORIGIN = 0x80000100, LENGTH = 0x8000
+    itim (airwx) : ORIGIN = 0x8000000, LENGTH = 0x4000
+    ram (ariwx) : ORIGIN = 0x80000000, LENGTH = 0x4C08
     rom (irx!wa) : ORIGIN = 0x40400000, LENGTH = 0xc00000
 }
 
@@ -30,6 +30,12 @@ PHDRS
 
 SECTIONS
 {
+
+    .camera_vector 0x80003000 : 
+    {
+        KEEP(*(.camera_vector)) 
+    }
+
     /* Each hart is allocated its own stack of size __stack_size. This value
      * can be overriden at build-time by adding the following to CFLAGS:
      *

@@ -13,21 +13,25 @@
 
 #define SIM_BREAK (volatile uint8_t *)(0x80000000)
 #define MAX_RANDOM_VEC 3
-#define MAX_RESULTS 10
-#define MAX_CHECK_RESULTS 15
-#define RANDOM_VECTORS_SIZE 512
-#define MONITOR_VECTORS_SIZE 10
+#define MAX_RESULTS 25
+#define MAX_CHECK_RESULTS 10
+#define RANDOM_VECTORS_SIZE 1
+#define CPU_RESULT_VECTOR_SIZE 1024
+#define MONITOR_VECTORS_SIZE 20
+#define ACCUM_VECTORS_SIZE 3
 
 extern uint64_t get_cycles();
+
 
 // IDEA: Linked list
 struct record_cycles_t {
 	uint64_t start;
 	uint64_t final;
 	uint64_t result;
+	uint64_t accum[ACCUM_VECTORS_SIZE];
 	uint64_t results[MAX_RESULTS];
 	int results_size;
-} record = { .start = 0, .final = 0, .result = 0, .results = { 0, 0, 0, 0, 0 },
+} record = { .start = 0, .final = 0, .result = 0, .results = { 0 },
 		.results_size = 0 };
 
 struct random_vectors_mgmt_t {
@@ -35,6 +39,10 @@ struct random_vectors_mgmt_t {
 	uint8_t B[RANDOM_VECTORS_SIZE];
 	uint8_t C[RANDOM_VECTORS_SIZE];
 } r_v_mgmt;
+
+//struct cpu_result_vector_t {
+//	uint8_t result[CPU_RESULT_VECTOR_SIZE];
+//} cpu_result_vector;
 
 struct monitor_vectors_t {
 	uint8_t A_0_MON[MONITOR_VECTORS_SIZE];
@@ -45,6 +53,8 @@ struct monitor_vectors_t {
 	uint8_t C_1_MON[MONITOR_VECTORS_SIZE];
 } monitor_vectors;
 
+uint8_t start_accum = 0;
+int lat_accum = 0;
 
 struct check_results_t {
 	uint8_t results[MAX_CHECK_RESULTS];
@@ -65,6 +75,21 @@ void end_compute_cycles() {
 
 	record.results[record.results_size] = record.result;
 	record.results_size++;
+}
+
+void commit_accum_cycles(uint32_t index) {
+	record.results[record.results_size] = record.accum[index];
+	record.results_size++;
+}
+
+void accum_cycles(uint32_t index) {
+	record.final = get_cycles();
+	record.result = record.final - record.start;
+	record.accum[index] += record.result;
+}
+
+void init_accum_cycles(uint32_t index) {
+	record.accum[index] = 0;
 }
 
 void sim_break() {
@@ -135,8 +160,8 @@ void ap_monitor(int elements) {
 	}
 }
 
-uint8_t checksum(uint8_t * arr, int size) {
-	uint8_t sum = 0;
+volatile uint8_t checksum(uint8_t * arr, int size) {
+	volatile uint8_t sum = 0;
 
 	for (int i = 0; i < size; i++)	sum += arr[i];
 
